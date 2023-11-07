@@ -1,0 +1,18 @@
+    <div class="header"></div>
+
+        <div class="main">
+            <h1 class="title">{{title}}</h1>
+            <button id = "signin" class="bigBtn" onClick="Login()">Sign In</button><br><br>
+            <button id = "signup" class="bigBtn" onClick="Register()">Sign Up</button>
+        </div>
+
+    <div class="footer"></div>
+<script>
+    function Login(){
+        window.location.assign("Login.hbs");
+    }
+            
+    function Register(){
+        window.location.assign("RegistrationType.hbs");
+    }
+</script>
