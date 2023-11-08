@@ -72,6 +72,10 @@ html, body {
     margin-left: 4px;
 }
 
+.colorWhite{
+    color: white;
+}
+
 /* buttons */
 .mainBtn{
     width: 500px;
