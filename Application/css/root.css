@@ -3,3 +3,41 @@
     font-family: 'Montserrat', sans-serif;
     background-image: url("Comp Lab BG png.png");
 }
+html, body {
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+}
+.header, .footer {
+    background-color: #007000;
+    width: 100%;
+    height: 40px;
+    margin: 0px;
+}
+.footer {
+    position: absolute;
+    bottom: 0px;
+}
+#name{
+    margin-left: 85px;
+}
+#idNum{
+    margin-left: 55px;
+}
+#numSeats{
+    margin-left: 25px;
+}
+#profilePic{
+    width: 175px;
+    height: 175px;
+    margin: 20 20 20 20;
+}
+#profileName{
+    margin-left: 27px;
+}
+#profileBday{
+    margin-left: 10px;
+}
+#profilePassword{
+    margin-left: 4px;
+}
