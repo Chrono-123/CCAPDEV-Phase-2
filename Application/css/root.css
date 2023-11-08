@@ -3,6 +3,36 @@
     font-family: 'Montserrat', sans-serif;
     background-image: url("Comp Lab BG png.png");
 }
+
+.main{
+    position: relative;
+    top: 130px;
+    margin: auto;
+    padding: 5px;
+    padding-bottom: 20px;
+    width: 40%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 20px;
+}
+.title{
+    text-align: center;
+    color: white;
+}
+.btnCenter{
+    /* padding-top:150px; */
+    text-align: center;
+}
+.resize{
+    font-size: 35px;
+    block-size: 35px;
+}
+.resizeSlightlySmaller{
+    font-size: 25px;
+    block-size: 25px;
+}
+
 html, body {
     padding: 0px;
     margin: 0px;
