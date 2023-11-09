@@ -23,7 +23,7 @@ app.get('/main', (req, res) => {
     });
  });
 
- app.get('/main', (req, res) => {
+ app.get('/main/index', (req, res) => {
     const acctChoice = JSON.parse(acctChoice);
     if (acctChoice.acct === "login"){
         res.render('Login', {
