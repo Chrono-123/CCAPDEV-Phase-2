@@ -1,0 +1,95 @@
+<html>
+    <!--This html page is for the lab technician and student to search for other users. Incomplete-->
+    <title>Search</title>
+
+    <head>
+        <div id="stickyBar">
+            <h2>Laboratory Reservation</h2>
+            <a href="Home.html">Home</a>
+            <a href="Reservation.html">Reserve</a>
+            <a href="Search.html">Search</a>
+            <a href="Profile.html">Profile</a>
+            <a href="main.html">Logout</a>
+        </div>
+
+        <link rel="stylesheet" href="template.css">
+    </head>
+
+    <body>
+        <h1>Search Other Users</h1>
+
+        <div class="main btnCenter lbTemplate">
+            Username <input type="text" id="otherUsers" class="resizeSlightlySmaller"> <button class="search resizeSlightlySmaller smallBtn" onClick="SearchUser()">Search</button>
+            Free Slots <input type="text" id="freeSlots" class="resizeSlightlySmaller"> <button class="search resizeSlightlySmaller smallBtn" onClick="SearchFreeSlots()">Search</button>
+        </div>
+
+        <script>
+            const registeredUsersString = localStorage.getItem('registeredUsers');////Retrieve from local storage
+            const registeredUsers = JSON.parse(registeredUsersString);//Parse to get value
+            const registeredAdminsString = localStorage.getItem('registeredAdmins');////Retrieve from local storage
+            const registeredAdmins = JSON.parse(registeredAdminsString);//Parse to get value
+
+            function SearchUser(){
+                var user = document.getElementById("otherUsers").value;//Get user value in input tag id otherUsers
+                var found = false;//Set boolean value found user to false
+                // console.log(registeredUsers[0].userName);
+                // console.log(registeredUsers[0].password);
+
+                for(var i = 0; i < registeredUsers.length; i++) {//Loop through the length of recorded registered users
+                    if(user == registeredUsers[i].userName){ //Match username input and array of registered users
+                        console.log("OK");
+                        var profileName = registeredUsers[i].firstName.concat(" ", registeredUsers[i].lastName);//Set temporary profile name to the value found
+                        var birthday = registeredUsers[i].dateOfBirth;//Set temporary birthday to the value found
+                        var userName = registeredUsers[i].userName;//Set temporary username to the value found
+                        var password = registeredUsers[i].password;//Set temporary password to the value found
+                        const temporaryUserProfileNameString = JSON.stringify(profileName);//Stringify to transfer JSON objects into local storage
+                        const temporaryUserBirthdayString = JSON.stringify(birthday);//Stringify to transfer JSON objects into local storage
+                        const temporaryUserUserNameString = JSON.stringify(userName);//Stringify to transfer JSON objects into local storage
+                        const temporaryUserPasswordString = JSON.stringify(password);//Stringify to transfer JSON objects into local storage
+                        localStorage.setItem('temporaryUserProfileName', temporaryUserProfileNameString);//Transfer to local storage
+                        localStorage.setItem('temporaryUserBirthday', temporaryUserBirthdayString);//Transfer to local storage
+                        localStorage.setItem('temporaryUserUserName', temporaryUserUserNameString);//Transfer to local storage
+                        localStorage.setItem('temporaryUserPassword', temporaryUserPasswordString);//Transfer to local storage
+                        console.log(temporaryUserProfileNameString);
+                        console.log(temporaryUserBirthdayString);
+                        console.log(temporaryUserUserNameString);
+                        console.log(temporaryUserPasswordString);
+                        found = true
+                        window.location.assign("TemporaryProfile.html");
+                    }
+                }
+
+                for(var i = 0; i < registeredAdmins.length; i++) {//Loop through the length of recorded registered admins
+                    if(user == registeredAdmins[i].userName){ //Match username input and array of registered admins
+                        console.log("OK");
+                        var profileName = registeredAdmins[i].firstName.concat(" ", registeredAdmins[i].lastName);//Set temporary profile name to the value found
+                        var birthday = registeredAdmins[i].dateOfBirth;//Set temporary birthday to the value found
+                        var userName = registeredAdmins[i].userName;//Set temporary username to the value found
+                        var password = registeredAdmins[i].password;//Set temporary password to the value found
+                        const temporaryUserProfileNameString = JSON.stringify(profileName);//Stringify to transfer JSON objects into local storage
+                        const temporaryUserBirthdayString = JSON.stringify(birthday);//Stringify to transfer JSON objects into local storage
+                        const temporaryUserUserNameString = JSON.stringify(userName);//Stringify to transfer JSON objects into local storage
+                        const temporaryUserPasswordString = JSON.stringify(password);//Stringify to transfer JSON objects into local storage
+                        localStorage.setItem('temporaryUserProfileName', temporaryUserProfileNameString);//Transfer to local storage
+                        localStorage.setItem('temporaryUserBirthday', temporaryUserBirthdayString);//Transfer to local storage
+                        localStorage.setItem('temporaryUserUserName', temporaryUserUserNameString);//Transfer to local storage
+                        localStorage.setItem('temporaryUserPassword', temporaryUserPasswordString);//Transfer to local storage
+                        console.log(temporaryUserProfileNameString);
+                        console.log(temporaryUserBirthdayString);
+                        console.log(temporaryUserUserNameString);
+                        console.log(temporaryUserPasswordString);
+                        found = true
+                        window.location.assign("TemporaryProfile.html");
+                    }
+                }
+
+                if(found == false)
+                    window.alert("Username or password cannot be found!");
+            }
+
+            function SearchFreeSlots(){
+                
+            }
+        </script>
+    </body>
+</html>

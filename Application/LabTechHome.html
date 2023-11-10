@@ -1,0 +1,48 @@
+<html>
+    <!--Home page of lab technicians users have three lab buttons to view the available slots within 7 days from the current date-->
+    <title>LabTechHome</title>
+
+    <head>
+        <div id="stickyBar">
+            <h2>Laboratory Reservation</h2>
+            <a href="LabTechHome.html">Home</a>
+            <a href="LabTechReservation.html">Reserve</a>
+            <a href="LabTechSearch.html">Search</a>
+            <a href="LabTechProfile.html">Profile</a>
+            <a href="main.html">Logout</a>
+        </div>
+        
+        <link rel="stylesheet" href="template.css">
+    </head>
+
+    <body>
+        <div class="lbTemplate" style="padding-top: 200px;">
+            <br><br><br>
+            <button type="button" id="lab1" onClick="lb1()" class="Lab">Lab 1</button>
+            <button type="button" id="lab2" onClick="lb2()" class="Lab">Lab 2</button>
+            <button type="button" id="lab3" onClick="lb3()" class="Lab">Lab 3</button>
+        </div>
+        
+        <div id = Seatlist>
+            <p id = Seatdaylist><br></p>
+            <p id = Seathourlist></p>
+        </div>
+
+        <script>
+            function lb1(){
+                console.log("Opened lab 1");
+                window.location.assign("TrialDates.html");
+            }
+
+            function lb2(){
+                console.log("Opened lab 2");
+                window.location.assign("TrialDates.html");
+            }
+
+            function lb3(){
+                console.log("Opened lab 3");
+                window.location.assign("TrialDates.html");
+            }
+        </script>
+    </body>
+</html>

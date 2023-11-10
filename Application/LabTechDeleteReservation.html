@@ -1,0 +1,58 @@
+<html>
+    <!--This html page is for the lab technician to delete a reservation if the student did not come withing ten minutes grace 
+        period. Incomplete-->
+    <title>Lab Tech Reservation</title>
+
+    <head>
+        <link rel="stylesheet" href="template.css">
+    </head>
+
+    <body>
+        <div class="reserveRequest">
+            <form>
+                ID number: <input type="text" id="idNum" class="form"><br><br>
+            </form>
+        </div>
+
+        <div class="lbTemplate">
+            <button type="button" id="lab1" onClick="delFromLb1()" class="Lab">Lab 1</button>
+            <button type="button" id="lab2" onClick="delFromLb2()" class="Lab">Lab 2</button>
+            <button type="button" id="lab3" onClick="delFromLb3()" class="Lab">Lab 3</button>
+        </div>
+
+        <script>
+            var idNum = document.getElementById("idNum").value;
+            const reserve = [];
+
+            function delFromLb1(){//I think these should also be sql statement to delete from the database of lab 1, 2 , or 3
+                console.log("Deleted from to lab 1");
+                const deleteL1 = {
+                    name: null,
+                    id: null,
+                    numOfSeats: null,
+                    dateReserved: null
+                };
+            }
+
+            function delFromLb2(){
+                console.log("Deleted from to lab 2");
+                const deleteL2 = {
+                    name: null,
+                    id: null,
+                    numOfSeats: null,
+                    dateReserved: null
+                };
+            }
+
+            function delFromLb3(){
+                console.log("Deleted from to lab 3");
+                const deleteL3 = {
+                    name: null,
+                    id: null,
+                    numOfSeats: null,
+                    dateReserved: null
+                };
+            }
+        </script>
+    </body>
+</html>
