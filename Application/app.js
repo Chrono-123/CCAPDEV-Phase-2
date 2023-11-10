@@ -6,7 +6,6 @@ const port = 3000;
 const app = express();
 
 app.use(express.static('/Application'));
-app.set('view engine', 'hbs');
 app.set('views', './views');
 app.use(express.json());
 app.set('/main', 'main.hbs');
