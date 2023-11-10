@@ -1,12 +1,11 @@
 const express = require('express');
-const exphbs = require('express-handlebars');
+const fs = require('fs');
 
 const port = 3000;
 
 const app = express();
 
 app.use(express.static('/Application'));
-app.engine('html', exphbs.engine({extname: 'html'}));
 app.set('view engine', 'hbs');
 app.set('views', './views');
 app.use(express.json());
