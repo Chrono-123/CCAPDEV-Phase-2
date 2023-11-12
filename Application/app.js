@@ -5,7 +5,7 @@ const port = 3000;
 
 const app = express();
 
-app.use(express.static('/Application'));
+app.use(express.static('html'));
 
 app.use(express.json());
 
