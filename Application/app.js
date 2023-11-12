@@ -6,7 +6,7 @@ const port = 3000;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'html')));
+app.use(express.static(path.join(__dirname + '/html')));
 
 app.use(express.json());
 
