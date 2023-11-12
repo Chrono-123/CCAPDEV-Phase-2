@@ -10,7 +10,9 @@ app.use(express.static(path.join(__dirname + '/html')));
 
 app.use(express.json());
 
-
+app.get('/', function(req, res){
+    res.send('main')
+});
 
 
 app.listen(port, () => {
