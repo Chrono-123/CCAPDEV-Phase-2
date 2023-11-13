@@ -4,6 +4,7 @@
         <title>View Slot Availability</title>
         
         <head>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <div id="stickyBar">
                 <h2>Laboratory Reservation</h2>
                 <a href="Home.html">Home</a>
@@ -33,17 +34,17 @@
             <script>
                 function lb1(){
                     console.log("Opened lab 1");
-                    window.location.assign("Lab1ReservationList.html");
+                    $(location).attr("href", "./reservation/Lab1ReservationList.html");
                 }
 
                 function lb2(){
                     console.log("Opened lab 2");
-                    window.location.assign("Lab2ReservationList.html");
+                    $(location).attr("href", "./reservation/Lab2ReservationList.html");
                 }
 
                 function lb3(){
                     console.log("Opened lab 3");
-                    window.location.assign("Lab3ReservationList.html");
+                    $(location).attr("href", "./reservation/Lab3ReservationList.html");
                 }
             </script>
         </body>
