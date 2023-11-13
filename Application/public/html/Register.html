@@ -17,15 +17,15 @@
 
             <form>
                 <label for="fName">First Name:</label>
-                <input type="text" id = "firstName" class="infoReg"><br>
+                <input type="text" id = "firstName" class="infoReg" name = "fName"><br>
                 <br><label for="lName">Last Name:</label>
-                <input type="text" id = "lastName" class="infoReg"><br>
+                <input type="text" id = "lastName" class="infoReg" name = "lName"><br>
                 <br><label for="dob">Date of Birth:</label>
-                <input type="date" id = "dateOfBirth" class="infoReg"><br>
+                <input type="date" id = "dateOfBirth" class="infoReg" name = "birth"><br>
                 <br><label for="uName">Username:</label>
-                <input type="text" id = "userName" class="infoReg"><br>
+                <input type="text" id = "userName" class="infoReg" name = "user"><br>
                 <br><label for="password">Password:</label>
-                <input type="password" id = "password" class="infoReg"><br><br>
+                <input type="password" id = "password" class="infoReg" name = "password"><br><br>
                 <button type="button" id="login" onClick="Login()">Sign in</button> 
                 <button type="button" id="register" onClick="Register()">Register</button>
             </form>    
@@ -40,6 +40,17 @@
                 $(location).attr("href", "Login.html");
             }
 
+            $("#register").click(function(){
+                $.post('../../routes.js', {
+                    firstName = $("#firstName").val(),
+                    lastName = $("#lastName").val(),
+                    dateOfBirth = $("#dateOfBirth").val(),
+                    userName = $("#userName").val(),
+                    password = $("#password").val()
+                },
+                function(data, status){
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
             function Register(){
                 console.log("Registered User!");
                 var firstName = $("#firstName").val();//Get firstName value in input tag id firstName
