@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path');
+const bodyParser = require('body-parser');
 const routes = requires('./routes.js');
 const server = requires('./public/javascript/database/server.js');
 
@@ -11,6 +11,10 @@ app.use(express.static('public'));
 app.use(express.urlencoded({
     extended: true
 });
+app.use(bodyParser.urlencoded({
+    extended:true
+});
+
 app.use('/', routes);
 
 server.connect();
