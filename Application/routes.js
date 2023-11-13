@@ -7,6 +7,6 @@ app.get('/', function(req, res){
 });
 
 app.get('/html/profile', function(req, res){
-  console.log(req.body);
+  const {fName, lName, birth, user, password} = req.body;
 });
 
