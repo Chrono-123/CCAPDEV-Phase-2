@@ -7,13 +7,13 @@ const port = 3000;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname + '/html')));
+app.use(express.static(path.join(__dirname + '/public')));
 app.use(express.urlencoded({
     extended: true
 });
 
 app.get('/', function(req, res){
-    res.send('main')
+    res.send('/html/main')
 });
 
 
