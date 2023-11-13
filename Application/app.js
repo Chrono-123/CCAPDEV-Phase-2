@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const routes = requires('./routes.js');
-const db = requires('./db.js');
+const server = requires('./public/javascript/database/server.js');
 
 const port = 3000;
 
@@ -12,6 +12,8 @@ app.use(express.urlencoded({
     extended: true
 });
 app.use('/', routes);
+
+server.connect();
 
 
 app.listen(port, () => {
