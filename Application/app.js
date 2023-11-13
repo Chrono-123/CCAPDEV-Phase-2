@@ -11,10 +11,7 @@ app.use(express.static(path.join(__dirname + '/public')));
 app.use(express.urlencoded({
     extended: true
 });
-
-app.get('/', function(req, res){
-    res.send('/html/main')
-});
+app.use('/', routes);
 
 
 app.listen(port, () => {
