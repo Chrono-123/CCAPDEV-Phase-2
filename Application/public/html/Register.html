@@ -27,7 +27,7 @@
                 <br><label for="password">Password:</label>
                 <input type="password" id = "password" class="infoReg" name = "password"><br><br>
                 <button type="button" id="login" onClick="Login()">Sign in</button> 
-                <button type="button" id="register" onClick="Register()">Register</button>
+                <button type="button" id="register">Register</button>
             </form>    
         </div>
 
@@ -41,24 +41,11 @@
             }
 
             $("#register").click(function(){
-                $.post('../../routes.js', {
-                    firstName = $("#firstName").val(),
-                    lastName = $("#lastName").val(),
-                    dateOfBirth = $("#dateOfBirth").val(),
-                    userName = $("#userName").val(),
-                    password = $("#password").val()
-                },
-                function(data, status){
-                    alert("Data: " + data + "\nStatus: " + status);
-                });
-            function Register(){
-                console.log("Registered User!");
                 var firstName = $("#firstName").val();//Get firstName value in input tag id firstName
                 var lastName = $("#lastName").val();//Get lastName value in input tag id lastName
                 var dateOfBirth = $("#dateOfBirth").val();//Get dateOfBirth value in input tag id dateOfBirth
                 var userName = $("#userName").val();//Get userName value in input tag id userName
                 var password = $("#password").val();//Get password value in input tag id password
-
                 const registeredUser = {//Create an instance of a registered user and set its values
                     firstName: firstName,
                     lastName: lastName,
@@ -66,14 +53,27 @@
                     userName: userName,
                     password: password
                 };
+                $.post('../../routes.js', {
+                    registeredUsersString = JSON.stringify(registeredUsers)
+                },
+                function(data, status){
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+                $(location).attr("href", "Login.html");
+            };
+                
+            function Register(){
+                console.log("Registered User!");
+                
+                
                 
                 console.log(registeredUsers);
                 console.log(registeredUser);
                 registeredUsers.push(registeredUser);//Push the registered user inside the array registeredUsers
-                const registeredUsersString = JSON.stringify(registeredUsers);//Stringify to transfer JSON objects into local storage
+                
                 localStorage.setItem('registeredUsers', registeredUsersString);//Transfer to local storage
                 console.log(registeredUsersString);
-                $(location).attr("href", "Login.html");
+                
             }
         </script>
     </body>
