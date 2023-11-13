@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const db = require('/public/javascript/database/server.js');
 const app = express();
 
 app.get('/', function(req, res){
@@ -7,6 +8,10 @@ app.get('/', function(req, res){
 });
 
 app.get('/html/register', function(req, res){
-  const {fName, lName, birth, user, password} = req.body;
+  const data = {fName, lName, birth, user, password} = req.body;
+  db.collection("reservations").insertOne('data', function(req, res){
+    db.close();
 });
 
+app.post('/html/profile', function(req, res){
+  
