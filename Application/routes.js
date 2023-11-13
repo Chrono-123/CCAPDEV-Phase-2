@@ -6,7 +6,7 @@ app.get('/', function(req, res){
   res.send('/html/main');
 });
 
-app.get('/html/profile', function(req, res){
+app.get('/html/register', function(req, res){
   const {fName, lName, birth, user, password} = req.body;
 });
 
