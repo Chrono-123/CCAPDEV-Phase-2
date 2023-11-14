@@ -15,7 +15,7 @@ app.get('/html/register', function(req, res) => {
 
 app.post('/html/profile', function(req, res) => {
   const data = {fName, lName, birth, user, password};
-  db.collection("laboratory").findOne({}, function(err, result)(
+  db.collection("laboratory").findOne({'data'}, function(err, result)(
     db.close()
     );
   res.send{
