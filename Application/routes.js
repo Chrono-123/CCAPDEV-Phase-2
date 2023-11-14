@@ -18,11 +18,8 @@ app.post('/html/profile', function(req, res) => { //mongodb -> node js -> html
   db.collection("laboratory").findOne({'data'}, function(err, result)(
     db.close()
     );
-  res.send{
-    fName,
-    lName,
-    birth,
-    user,
-    password
+  res.send{json.stringify({
+    
+  });
   };
 };
