@@ -1,0 +1,65 @@
+<html>
+    <title>Reserve Slot</title>
+    <head
+        <div id="stickyBar">
+            <h2 style="margin-left: 10px;padding-right: 427px;height: 68.425;width: 200px;">Laboratory Reservation</h2>
+            <a href="Home.html">Home</a>
+            <a href="Reservation.html">Reserve</a>
+            <a href="Search.html">Search</a>
+            <a href="Profile.html">Profile</a>
+        </div>
+        <link rel="stylesheet" href="template.css">
+    </head>
+    <body>
+        <h1>Reservation</h1>
+        <div class="reserveRequest">
+            <form>
+                Name: <input type="text" id="name" class="form" display="none"><br><br>
+                ID number: <input type="text" id="idNum" class="form"><br><br>
+                number of seats: <input type="number" id="numSeats" class="form"><br><br>
+                Date to Reserve for: <input type="datetime-local" id="date" class="form"><br><br>
+            </form>
+        </div>
+        <div class="lbTemplate">
+            <button type="button" id="lab1" onClick="lb1()" class="Lab">Lab 1</button>
+            <button type="button" id="lab2" onClick="lb2()" class="Lab">Lab 2</button>
+            <button type="button" id="lab3" onClick="lb3()" class="Lab">Lab 3</button>
+            
+        </div>
+        <script>
+            var name = document.getElementById("name").value;
+            var idNum = document.getElementById("idNum").value;
+            var seats = document.getElementById("numSeats").value;
+            var date = document.getElementById("date").value;
+            const reserve = [];
+            function lb1(){
+                console.log("Reserved to lab 1");
+                const reserveL1 = {
+                    name: this.name,
+                    id: this.idNum,
+                    numOfSeats: this.seats,
+                    dateReserved: this.date
+                };
+                
+            }
+            function lb2(){
+                console.log("Reserve to lab 2");
+                const reserveL2 = {
+                    name: this.name,
+                    id: this.idNum,
+                    numOfSeats: this.seats,
+                    dateReserved: this.date
+                };
+            }
+            function lb3(){
+                console.log("Reserve to lab 3");
+                const reserveL3 = {
+                    name: this.name,
+                    id: this.idNum,
+                    numOfSeats: this.seats,
+                    dateReserved: this.date
+                };
+            }
+        </script>
+    </body>
+</html>
