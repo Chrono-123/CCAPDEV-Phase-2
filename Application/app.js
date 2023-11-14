@@ -1,28 +1,23 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const routes = requires('./routes.js');
-const server = requires('./public/javascript/database/server.js');
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import "dotenv/config";
 
 const port = 3000;
 
 const app = express();
 
-server.connect();
-
-app.use(express.static('public'));
-app.use(cors);
-app.use(express.urlencoded({
-    extended: true
-});
+app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended:true
-});
-app.use(bodyParser.json());
+app.use(
+	bodyParser.urlencoded({
+			extended: true,
+	})
+);
+	
+const routes = express.Router();
 
-app.use('/', routes);
 
 
 
