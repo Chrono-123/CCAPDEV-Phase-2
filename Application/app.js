@@ -3,7 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import "dotenv/config";
-import routes from 'routes.js';
+import routes from './routes.js';
 
 const port = 3000;
 
