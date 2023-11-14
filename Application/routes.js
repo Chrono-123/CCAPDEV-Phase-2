@@ -9,7 +9,7 @@ app.get('/', function(req, res){
 
 app.get('/html/register', function(req, res){
   const data = {fName, lName, birth, user, password} = req.body;
-  db.collection("reservations").insertOne('data', function(req, res){
+  db.collection("laboratory").insertOne('data', function(req, res){
     db.close();
 });
 
