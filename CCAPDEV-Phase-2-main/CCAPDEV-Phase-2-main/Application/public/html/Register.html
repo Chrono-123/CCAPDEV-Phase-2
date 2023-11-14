@@ -27,7 +27,7 @@
                 <br><label for="password">Password:</label>
                 <input type="password" id = "password" class="infoReg" name = "password"><br><br>
                 <button type="button" id="login" onClick="Login()">Sign in</button> 
-                <button type="button" id="register">Register</button>
+                <button type="submit" id="register">Register</button>
             </form>    
         </div>
 
@@ -61,20 +61,7 @@
                 });
                 $(location).attr("href", "Login.html");
             };
-                
-            function Register(){
-                console.log("Registered User!");
-                
-                
-                
-                console.log(registeredUsers);
-                console.log(registeredUser);
-                registeredUsers.push(registeredUser);//Push the registered user inside the array registeredUsers
-                
-                localStorage.setItem('registeredUsers', registeredUsersString);//Transfer to local storage
-                console.log(registeredUsersString);
-                
-            }
+           
         </script>
     </body>
 </html>
