@@ -26,11 +26,11 @@ app.get('/', function(req, res){
 
 app.get('/html/register', function(req, res) {
   db.collection("test").insertOne({
-        firstName: "Sean",
-        lastName: "Lim",
-        dateOfBirth: "11/10/01",
-        userName: "Jesus",
-        password: "Iamjesus"
+        firstName: req.body.fName,
+        lastName: req.body.lName,
+        dateOfBirth: req.body.birth,
+        userName: req.body.user,
+        password: req.body.password
     }).then(val => {
         console.log("Insert successful: ");
         console.log(val);
