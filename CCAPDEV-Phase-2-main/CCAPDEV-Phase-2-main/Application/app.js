@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import "dotenv/config";
 import routes from './routes.js';
+import db from './public/javascript/database/server.js';
 
 const port = 3000;
 
