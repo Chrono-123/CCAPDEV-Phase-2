@@ -25,10 +25,18 @@ app.get('/', function(req, res){
 });
 
 app.get('/html/register', function(req, res) {
-  const data = {fname, lname, birth, user, password} = req.body;
-  db.collection("lab").insertOne('data', function(req, res){
-    db.close();
-  })
+  db.collection("test").insertOne({
+        firstName: "Sean",
+        lastName: "Lim",
+        dateOfBirth: "11/10/01",
+        userName: "Jesus",
+        password: "Iamjesus"
+    }).then(val => {
+        console.log("Insert successful: ");
+        console.log(val);
+    }).catch(error => {
+        console.log("Insert op error: " + error);
+    });
 });
 
 app.post('/html/profile', function(req, res){
