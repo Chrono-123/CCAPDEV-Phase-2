@@ -12,19 +12,19 @@
         
         <div class="main">
             <div class="login">
-                <form class="table btnCenter">
+                <form class="table btnCenter" method = 'POST'>
                     <p class="tRow"></p>
-                        <label class="resize" style="color: white; font-weight: bold;">Username </label><input type="text" id="userName" class="infoLogin tCell resize">
+                        <label class="resize" style="color: white; font-weight: bold;">Username </label><input type="text" id="userName" class="infoLogin tCell resize" name="uName">
                     </p>
                     <br>
 
                     <p class="tRow">
-                        <label class="resize" style="color: white; font-weight: bold;">Password </label><input type="password" id="key" class="infoLogin tCell resize">
+                        <label class="resize" style="color: white; font-weight: bold;">Password </label><input type="password" id="key" class="infoLogin tCell resize" name="password">
                     </p>
                     <br>
 
                     <div>
-                        <button type="button" id="login" class="smallBtn" onClick="Check()">Login</button>
+                        <button type="submit" id="login" class="smallBtn" onClick="Check()">Login</button>
                         <button type="button" id="register" class="smallBtn" onClick="Register()">Register</button>
                     </div>
                 </form>
