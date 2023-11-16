@@ -17,6 +17,7 @@
     "start": "node app.js",
     "connect": "node public/database/conn.js",
     "server": "node public/database/server.js",
+    "controller": "node public/controllers/controller.js ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
