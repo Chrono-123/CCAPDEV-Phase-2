@@ -6,10 +6,28 @@ const app = express();
 
 const db = getDb();
 
+var acctIdNum;
+
 app.get('/', function(req, res){
   res.send('/html/main');
 });
 
+app.get('/html/login', function(req, res){
+  var loginUserName = req.body.username;
+  var loginPassword = req.body.password;
+
+  db.collection("test").find({
+        userName: loginUserName,
+        password: loginPassword
+    }).then(val => {
+        console.log("found ");
+        console.log(val);
+        this.acctIdNum = //id number
+    }).catch(error => {
+        console.log("Account not found");
+    });
+});
+  
 app.get('/html/register', function(req, res) {
   db.collection("test").insertOne({
         firstName: req.body.fName,
