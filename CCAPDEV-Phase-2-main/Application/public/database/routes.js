@@ -19,10 +19,12 @@ app.get('/html/login', function(req, res){
   db.collection("test").find({
         userName: loginUserName,
         password: loginPassword
+    },
+        {_id: 1
     }).then(val => {
         console.log("found ");
         console.log(val);
-        this.acctIdNum = //id number
+        this.acctIdNum = "_id";
     }).catch(error => {
         console.log("Account not found");
     });
