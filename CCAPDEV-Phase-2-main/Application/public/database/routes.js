@@ -16,7 +16,7 @@ app.get('/html/login', function(req, res){
   var loginUserName = req.body.username;
   var loginPassword = req.body.password;
 
-  db.collection("test").find({
+this.acctIdNum = db.collection("test").find({
         userName: loginUserName,
         password: loginPassword
     },
@@ -24,7 +24,6 @@ app.get('/html/login', function(req, res){
     }).then(val => {
         console.log("found ");
         console.log(val);
-        this.acctIdNum = "_id";
     }).catch(error => {
         console.log("Account not found");
     });
