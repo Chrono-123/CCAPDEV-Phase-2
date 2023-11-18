@@ -4,7 +4,9 @@ const server = require('./Application/public/database/server.js');
 const app = express();
 const controller = require('../../controllers/mainController.js');
 
-module.exports = app;
+module.exports = controller;
+
+
 // app.get('/', function(req, res){
 //   res.send('/html/main');
 // });
