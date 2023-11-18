@@ -1,0 +1,29 @@
+<DOCTYPE!>
+    <html>
+        <!--This is the Registration Type page, where a user chooses which account they wants to create and redirects to the 
+            labTechRegister.html or Register.html-->
+        <title>Registration Type</title>
+        <head>
+            <div id="stickyBar">
+                <h2>Laboratory Reservation</h2>
+            </div>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <link rel="stylesheet" href="/css/template.css">
+        </head>
+        <body class="background">
+            <div class="regType main">
+                <h3>Choose an account type</h3>
+                <button type="button" id="labTech" class="smallBtn"><a href="/labTechRegister">LabTechnician</a></button> 
+                <button type="button" id="regularAcc" class="smallBtn"><a href="/studentRegister">Regular Account</a></button>
+            </div>
+            <script>
+                function LabTech(){
+                    $(location).attr("href", "./tech/LabTechRegister.html");
+                }
+                function RegularAcc(){
+                    $(location).attr("href", "Register.html");
+                }
+            </script>
+        </body>
+    </html>
+</DOCTYPE>
