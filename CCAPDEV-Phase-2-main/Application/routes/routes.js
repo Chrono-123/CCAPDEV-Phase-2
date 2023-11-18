@@ -6,11 +6,11 @@ const labTechModel = require('../models/labTechSchema.js');
 const app = express();
 
 app.get(`/`, controller.getMain);
-app.get(`/login`, controller.redirectMain);
+app.get(`/login`, controller.login);
 
 app.post(`/checkUser`, controller.checkUser);
-app.get(`/home/:email`, controller.getStudent);
-app.get(`/labTechHome/:email`, controller.getLabTech);
+app.get(`/home/:user`, controller.getStudent);
+// app.get(`/labTechHome/:email`, controller.getLabTech);
 
 app.get(`/registrationType`, controller.registrationType);
 app.get(`/studentRegister`, controller.studentRegister);
