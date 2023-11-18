@@ -12,4 +12,12 @@ getMain: app.get('/', function(req, res) {
 getMainBody: app.get('/main', function(req, res) {
    res.render('main');
 });
+
+getLogin: app.get('/login', function(req, res) {
+   res.render('login');
+});
+
+getRegister: app.get('/register', function(req, res) {
+   res.render('register');
+});
 module.exports = app;
