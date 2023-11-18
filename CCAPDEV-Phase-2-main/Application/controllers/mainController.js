@@ -5,11 +5,11 @@ const student = require('./studentController.js');
 
 const app = express();
 
-app.get('/', function(req, res) {
+getMain: app.get('/', function(req, res) {
    res.redirect('/main');
 });
 
-app.get('/main', function(req, res) {
+getMainBody: app.get('/main', function(req, res) {
    res.render('main');
 });
 
