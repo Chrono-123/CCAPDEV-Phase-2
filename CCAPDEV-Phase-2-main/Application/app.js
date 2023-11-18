@@ -11,7 +11,7 @@ import { connectToMongo, getDb } from './public/database/conn.js';
 import { Lab1, Lab2, Lab3 } from "./models/labSchema.js";
 import Student from "./models/studentSchema.js";
 import LabTech from "./models/labTechSchema.js";
-// import {} from "./controllers/labController.js";
+// import {} from "./controllers/labController.js"; 
 // import {} from "./controllers/studentController.js";
 // import {} from "./controllers/labTechController.js";
 
