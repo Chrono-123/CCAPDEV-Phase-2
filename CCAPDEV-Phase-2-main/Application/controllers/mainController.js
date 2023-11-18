@@ -1,4 +1,5 @@
 const express = require('express');
+const lab = require('./labController.js');
 
 const app = express();
 
