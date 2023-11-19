@@ -12,21 +12,25 @@
         
         <div class="main">
             <div class="login">
-                <form class="table btnCenter" action = "/checkUser" method = "post">
-                    <p class="tRow"></p>
-                        <label class="resize" style="color: white; font-weight: bold;">Username </label><input type="text" id="userName" class="infoLogin tCell resize">
-                    </p>
-                    <br>
+                <form class="table btnCenter" action="/checkUser" method="post">
+                    <fieldset>
+                        <p class="tRow"></p>
+                            <label class="resize" style="color: white; font-weight: bold;">Username </label>
+                            <input type="text" id="userName" class="infoLogin tCell resize" name = "user">
+                        </p>
+                        <br>
 
-                    <p class="tRow">
-                        <label class="resize" style="color: white; font-weight: bold;">Password </label><input type="password" id="key" class="infoLogin tCell resize">
-                    </p>
-                    <br>
+                        <p class="tRow">
+                            <label class="resize" style="color: white; font-weight: bold;">Password </label>
+                            <input type="password" id="key" class="infoLogin tCell resize" name = "password">
+                        </p>
+                        <br>
 
-                    <div>
-                        <button type="submit" id="login" class="smallBtn">Log In</button>
-                        <button type="button" id="register" class="smallBtn" onClick="Register()">Register</button>
-                    </div>
+                        <div>
+                            <button type="submit" id="login" class="smallBtn">Log In</button>
+                            <button type="button" id="register" class="smallBtn"><a href="/registrationType">Register</a></button>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
         </div>

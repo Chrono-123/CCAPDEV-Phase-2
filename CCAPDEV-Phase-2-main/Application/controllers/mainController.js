@@ -2,7 +2,6 @@
 const labModel = require('../models/labSchema.js');
 const studentModel = require('../models/studentSchema.js');
 const labTechModel = require('../models/labTechSchema.js');
-var userName;
 
 const controller = {
     getMain: function(req, res) {
@@ -17,19 +16,28 @@ const controller = {
         const userName = req.body.user;
         const password = req.body.password;
 
-
-        studentModel.find({userName: userName}, {password: password}, function(err, doc){
-            if(err){
-                console.log(err);
-            }
-            else{
-                console.log(doc);
-                this.userName = userName;
-                res.redirect(`/home/` + userName);
-                res.render('home');
-            }
+        
+        // console.log(await studentModel.findOne({userName: userName}));
+        studentModel.findOne({userName: userName, password: password}).then(user => {
+            console.log("User found: ");
+            console.log(user);
+            console.log(user.password);
+            res.redirect(`/home/` + user);
+        }).catch(error => {
+            console.log("Insert op error: " + error);
         });
-
+        
+        // , function(err, doc){
+        //     if(err){
+        //         console.log(err);
+        //     }
+        //     else{
+        //         console.log(doc);
+        //         id = doc.getId();
+        //         res.redirect(`/home/` + userName);
+        //         res.render('home');
+        //     }
+        // });
         // studentModel.find( { $or: [ {userName: user} ] }, ( err, students ) => {
         //     if( err ){ return console.log( err ); }
         //     else{
@@ -46,15 +54,16 @@ const controller = {
         //     }
         // });
 
-        res.redirect(`/home/` + userName);
+        // res.redirect(`/home/` + userName);
         // else if labTech
         // res.redirect(`/labTechHome/` + user);
     },
 
-    getStudent: async function(req, res) {
-        const userName = req.params.user;
+    getStudent: function(req, res) {
+        const user = req.params.user;
         // var password = req.params.password;
 
+        console.log(user);
         res.render(`Home`);
     },
 
@@ -111,7 +120,7 @@ const controller = {
             userName: req.body.user,
             password: req.body.password
         });
-        if (!(studentModel.find({userName: userName}))){
+        if (student.find(req.body.user)){
             student.save().then(val => {
                 console.log("Insert successful: ");
                 console.log(val);
@@ -122,35 +131,16 @@ const controller = {
         }else{
             console.alert("Username already exists");
         }
-
         
-    },
-    registerTech: function (req, res){
-        const labTech = new labTechModel({
-            firstName: req.body.fNameLab,
-            lastName: req.body.lNameLab,
-            dateOfBirth: req.body.birthLab,
-            userName: req.body.userLab,
-            password: req.body.passwordLab
+        student.save().then(val => {
+            console.log("Insert successful: ");
+            console.log(val);
+        }).catch(error => {
+            console.log("Insert op error: " + error);
         });
-        console.log(userName);
-        if (!(labTechModel.find({userName: userName}))){
-            student.save().then(val => {
-                console.log("Insert successful: ");
-                console.log(val);
-            }).catch(error => {
-                console.log("Insert op error: " + error);
-            });
-            res.render(`main`);
-        }else{
-            console.alert("Username already exists");
-        }
-    },
-    retrieveData: function(req, res){
-        const query = studentModel.findOne({userName: userName});
-        console.log(query);
 
-    }
+        res.render(`main`);
+    },
 }
 
 module.exports = controller;

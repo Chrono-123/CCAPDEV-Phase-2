@@ -17,5 +17,5 @@ app.get(`/studentRegister`, controller.studentRegister);
 app.get(`/labTechRegister`, controller.labTechRegister);
 
 app.post(`/registerStudent`, controller.registerStudent);
-app.post(`/labTechRegister`, controller.labTechRegister);
+
 module.exports = app;
