@@ -113,33 +113,39 @@ const controller = {
         //         }
         //     }
         // });
-        const student = new studentModel({
-            firstName: req.body.fName,
-            lastName: req.body.lName,
-            dateOfBirth: req.body.birth,
-            userName: req.body.user,
-            password: req.body.password
-        });
-        if (student.find(req.body.user)){
+        if (!studentModel.find({userName: req.body.user})){
             student.save().then(val => {
                 console.log("Insert successful: ");
                 console.log(val);
             }).catch(error => {
                 console.log("Insert op error: " + error);
             });
+            res.redirect('/');
             res.render(`main`);
         }else{
-            console.alert("Username already exists");
-        }
-        
-        student.save().then(val => {
-            console.log("Insert successful: ");
-            console.log(val);
-        }).catch(error => {
-            console.log("Insert op error: " + error);
+            console.log("Username already exists");
+        }  
+    },
+    registerTech: function(req, res){
+        const labTech = new labTechModel({
+            firstName: req.body.fNameLab,
+            lastName: req.body.lNameLab,
+            dateOfBirth: req.body.birthLab,
+            userName: req.body.userLab,
+            password: req.body.passwordLab
         });
-
-        res.render(`main`);
+        if (!labTechModel.find({userName: req.body.userLab})){
+            labTech.save().then(val => {
+                console.log("Insert successful: ");
+                console.log(val);
+            }).catch(error => {
+                console.log("Insert op error: " + error);
+            });
+            res.redirect('/');
+            res.render(`main`);
+        }else{
+            console.log("Username already exists");
+        }  
     },
 }
 
