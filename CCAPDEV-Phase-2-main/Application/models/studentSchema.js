@@ -7,12 +7,6 @@ const studentSchema = new Schema({
     dateOfBirth: String,
     userName: String,
     password: String,
-    // userType: {
-    //     type: String,
-    //     required: true    
-    // },
-  
-    // refreshToken: String
 });
 
 const Student = mongoose.model('student', studentSchema);

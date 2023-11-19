@@ -1,16 +1,10 @@
 // const db = require('../app.js');
-const labModel = require('../models/labSchema.js');
+const lab1Model = require('../models/lab1Schema.js');
+const lab2Model = require('../models/lab2Schema.js');
+const lab3Model = require('../models/lab3Schema.js');
 const studentModel = require('../models/studentSchema.js');
 const labTechModel = require('../models/labTechSchema.js');
 
-async function accountExist(user) {
-    const exists = studentModel.find({userName: user});
-    if (exists){
-        return true;
-    }else{
-        return false;
-    };
-};
 const controller = {
     getMain: function(req, res) {
         res.render(`main`);
@@ -20,59 +14,27 @@ const controller = {
         res.render(`Login`);
     },
 
-    checkUser: async function(req, res) {
+    checkUser: function(req, res) {
         const userName = req.body.user;
         const password = req.body.password;
-
         
         // console.log(await studentModel.findOne({userName: userName}));
         studentModel.findOne({userName: userName, password: password}).then(user => {
             console.log("User found: ");
             console.log(user);
             console.log(user.password);
-            res.redirect(`/home/` + user);
+            res.redirect(`/home/` + userName);
         }).catch(error => {
             console.log("Insert op error: " + error);
         });
-        
-        // , function(err, doc){
-        //     if(err){
-        //         console.log(err);
-        //     }
-        //     else{
-        //         console.log(doc);
-        //         id = doc.getId();
-        //         res.redirect(`/home/` + userName);
-        //         res.render('home');
-        //     }
-        // });
-        // studentModel.find( { $or: [ {userName: user} ] }, ( err, students ) => {
-        //     if( err ){ return console.log( err ); }
-        //     else{
-        //         if( students ){
-        //             if( students.length > 0 ){
-        //                 for( let i = 0; i < students.length; i++ ){
-        //                     let hasName = ( students[i].userName == user );
-        //                     if( hasName ){
-        //                         res.redirect(`/home/` + userName);;
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
-
-        // res.redirect(`/home/` + userName);
-        // else if labTech
-        // res.redirect(`/labTechHome/` + user);
     },
 
     getStudent: function(req, res) {
-        const user = req.params.user;
+        const userName = req.params.userName;
         // var password = req.params.password;
 
-        console.log(user);
-        res.render(`Home`);
+        console.log(userName);
+        res.render(`Home`, { userName: userName });
     },
 
     // getLabTech: function(req, res) {
@@ -87,85 +49,127 @@ const controller = {
     },
 
     studentRegister: function(req, res) {
-        res.render('Register.hbs');
+        res.render(`Register.hbs`);
     },
 
     labTechRegister: function(req, res) {
-        res.render('LabTechRegister.hbs');
+        res.render(`LabTechRegister.hbs`);
     },
 
-    registerStudent: async function(req, res) {
-        // studentModel.find( { $or: [ {userName: user} ] }, ( err, students ) => {
-        //     if( err ){ return console.log( err ); }
-        //     else{
-        //         if( students ){
-        //             if( students.length > 0 ){
-        //                 for( let i = 0; i < students.length; i++ ){
-        //                     let hasName = ( students[i].userName == user );
-        //                     if( hasName ){
-        //                         return console.log( 'Name already exists.' );
-        //                     }
-        //                 }
-        //             }
-        //         } else{
-
-        //             // If email or username is unique / not exists in DB
-        //             // then save / create a new user
-        //             const student = new studentModel({
-        //                 firstName: req.body.fName,
-        //                 lastName: req.body.lName,
-        //                 dateOfBirth: req.body.birth,
-        //                 userName: req.body.user,
-        //                 password: req.body.password
-        //             });
-        //         }
-        //     }
-        // });
-
-        if (await accountExist(req.body.user)){
-            console.log("Username already exists");
-            res.redirect('/studentRegister'); 
-        }else{
-            const student = new studentModel({
-                firstName: req.body.fName,
-                lastName: req.body.lName,
-                dateOfBirth: req.body.birth,
-                userName: req.body.user,
-                password: req.body.password
-            });
-            student.save().then(val => {
-                console.log("Insert successful: ");
-                console.log(val);
-            }).catch(error => {
-                console.log("Insert op error: " + error);
-            });
-            res.redirect('/');
-            res.render(`main`);
-        };
-    },
-    registerTech: async function(req, res){
-        const labTech = new labTechModel({
-            firstName: req.body.fNameLab,
-            lastName: req.body.lNameLab,
-            dateOfBirth: req.body.birthLab,
-            userName: req.body.userLab,
-            password: req.body.passwordLab
+    registerStudent: function(req, res) {
+        const student = new studentModel({
+            firstName: req.body.fName,
+            lastName: req.body.lName,
+            dateOfBirth: req.body.birth,
+            userName: req.body.user,
+            password: req.body.password
+        });
+        
+        student.save().then(val => {
+            console.log("Insert successful: ");
+            console.log(val);
+        }).catch(error => {
+            console.log("Insert op error: " + error);
         });
 
-        if (!labTechModel.find({userName: req.body.userLab})){
-            labTech.save().then(val => {
+        res.render(`main`);
+    },
+    
+    home: function(req, res) {
+        res.render(`Home`);
+    },
+
+    reservation: function(req, res) {
+        res.render(`Reservation`);
+    },
+
+    reserveSlot: function(req, res) {
+        res.render(`ReserveSlot`);
+    },
+    
+    reserve: function(req, res) {
+        const lab = req.body.lab;
+        console.log(lab);
+
+        if(lab == "lab1") {
+            const reservation = new lab1Model({
+                name: req.body.name,
+                id: req.body.idNum,
+                numOfSeats: req.body.numOfSeats,
+                dateReserved: req.body.reservationDate
+            });
+
+            reservation.save().then(val => {
                 console.log("Insert successful: ");
                 console.log(val);
             }).catch(error => {
                 console.log("Insert op error: " + error);
             });
-            res.redirect('/');
-            res.render(`main`);
-        }else{
-            console.log(req.body.userLab);
-            console.log("Username already exists");
-            res.redirect('/labTechRegister');
-        }  
+
+            res.redirect(`/lab/` + lab);
+        } else if(lab == "lab2") {
+            const reservation = new lab2Model({
+                name: req.body.name,
+                id: req.body.idNum,
+                numOfSeats: req.body.numOfSeats,
+                dateReserved: req.body.reservationDate
+            });
+
+            reservation.save().then(val => {
+                console.log("Insert successful: ");
+                console.log(val);
+            }).catch(error => {
+                console.log("Insert op error: " + error);
+            });
+
+            res.redirect(`/lab/` + lab);
+        } else if(lab == "lab3") {
+            const reservation = new lab3Model({
+                name: req.body.name,
+                id: req.body.idNum,
+                numOfSeats: req.body.numOfSeats,
+                dateReserved: req.body.reservationDate
+            });
+
+            reservation.save().then(val => {
+                console.log("Insert successful: ");
+                console.log(val);
+            }).catch(error => {
+                console.log("Insert op error: " + error);
+            });
+
+            res.redirect(`/lab/` + lab);
+        } else
+            console.log("No lab designated!");
+    },
+
+    getLab: function(req, res) {
+        const lab = req.params.lab
+
+        if(lab == "lab1") {
+            res.render(`Lab1`);
+        } else if(lab == "lab2") {
+            res.render(`Lab2`);
+        } else if(lab == "lab3") {
+            res.render(`Lab3`);
+        } else
+            console.log("No lab designated!");
+    },
+
+    editSlot: function(req, res) {
+        res.render(`EditSlot`);
+    },
+
+    viewSlot: function(req, res) {
+        res.render(`ViewSlot`);
+    },
+
+    search: function(req, res) {
+        res.render(`Search`);
+    },
+
+    profile: function(req, res) {
+        res.render(`Profile`);
     },
 }
 

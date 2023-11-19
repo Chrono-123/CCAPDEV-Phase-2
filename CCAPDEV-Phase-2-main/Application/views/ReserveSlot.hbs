@@ -4,167 +4,41 @@
         <title>Reserve Slot</title>
 
         <head>
-            <div id="stickyBar" class="stickyBar">
-                <h2>Laboratory Reservation</h2>
-                <!-- <a href="Home.html">Home</a>
-                <a href="Reservation.html">Reserve</a>
-                <a href="Search.html">Search</a>
-                <a href="Profile.html">Profile</a>
-                <a href="main.html">Logout</a> -->
-            </div>
 	     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             <link rel="stylesheet" href="/css/template.css">
         </head>
 
+        {{> navBar login=true}}
         <body>
             <div class="reserveRequest">
-                <form>
-                    Name: <input type="text" id="name" class="form" style="margin-left: 100px"><br><br>
-                    ID number: <input type="text" id="idNum" class="form" style="margin-left: 60px"><br><br>
-                    number of seats: <input type="number" id="numSeats" class="form" style="margin-left: 20px"><br><br>
-                    Date to Reserve for: <input type="datetime-local" id="date" class="form"><br><br>
-                </form>
-            </div>
-
-            <div class="lbTemplate">
-                <br><br><br><br><br><br>
-                <button type="button" id="lab1" onClick="lb1()" class="Lab">Lab 1<br><h6 style="margin-top:-2px;height: 0px;margin-bottom: 16.222;width: 18.941;">Available: </h6><h6 id="available1" style="margin-top: 16.222;">10</h6></button>
-                <button type="button" id="lab2" onClick="lb2()" class="Lab">Lab 2<br><h6 style="margin-top:-2px;height: 0px;margin-bottom: 16.222;width: 18.941;">Available: </h6><h6 id="available2" style="margin-top: 16.222;">10</h6></button>
-                <button type="button" id="lab3" onClick="lb3()" class="Lab">Lab 3<br><h6 style="margin-top:-2px;height: 0px;margin-bottom: 16.222;width: 18.941;">Available: </h6><h6 id="available3" style="margin-top: 16.222;">10</h6></button>    
+                <fieldset>
+                    <form action="/reserve" method="post">
+                    Name: <input type="text" id="name" class="form" style="margin-left: 100px" name = "name"><br><br>
+                    ID number: <input type="text" id="idNum" class="form" style="margin-left: 60px" name = "idNum"><br><br>
+                    number of seats: <input type="number" id="numSeats" class="form" style="margin-left: 20px" name = "numOfSeats"><br><br>
+                    Date to Reserve for: <input type="datetime-local" id="date" class="form" name = "reservationDate"><br><br>
+                    <input type="hidden" id="lab" name = "lab"/>
+                        <div class="lbTemplate">
+                            <br><br><br><br><br><br>
+                            <button type="submit" id="lab1" class="Lab" onclick="lb1()">Lab 1<br><h6 style="margin-top:-2px;height: 0px;margin-bottom: 16.222;width: 18.941;">Available: </h6><h6 id="available1" style="margin-top: 16.222;">10</h6></button>
+                            <button type="submit" id="lab2" class="Lab" onclick="lb2()">Lab 2<br><h6 style="margin-top:-2px;height: 0px;margin-bottom: 16.222;width: 18.941;">Available: </h6><h6 id="available2" style="margin-top: 16.222;">10</h6></button>
+                            <button type="submit" id="lab3" class="Lab" onclick="lb3()">Lab 3<br><h6 style="margin-top:-2px;height: 0px;margin-bottom: 16.222;width: 18.941;">Available: </h6><h6 id="available3" style="margin-top: 16.222;">10</h6></button>    
+                        </div>
+                    </form>
+                </fieldset>
             </div>
 
             <script>
-                var seats1 = document.getElementById("available1").innerText;//Get seats1 value in header tag id available1
-                var seats2 = document.getElementById("available2").innerText;//Get seats2 value in header tag id available2
-                var seats3 = document.getElementById("available3").innerText;//Get seats2 value in header tag id available3
-                console.log(name);
-                const reservedSlots = [];
-
                 function lb1(){
-                    console.log("Reserved to lab 1");
-                    var name = $("#name").val();//Get name value in input tag id name
-                    var idNum = $("#idNum").val();//Get idNum value in input tag id idNum
-                    var seats = $("#numSeats").val();//Get seats value in input tag id numSeats
-                    var date = $("#date").val();//Get date value in input tag id date
-
-                    const reserveL1 = {//Create an instance of a reserveL1 and set its values
-                        name: name,
-                        id: idNum,
-                        numOfSeats: seats,
-                        dateReserved: date
-                    };
-
-                    reservedSlots.push(reserveL1);//Push the lab 1 reservation inside the array reservedSlots
-                    console.log(seats);
-                    console.log(seats1);
-                    console.log(reserveL1);
-                    console.log(reservedSlots);
-                    console.log(name);
-                    const reservedSlotsString = JSON.stringify(reservedSlots);//Stringify to transfer JSON objects into local storage
-                     
-                    if (idNum === "" || seats === "" || date ==="") {
-                        alert("Missing 1 or more fields");
-                    }
-                    else if(seats1 <= 0){
-                        alert("This lab is full");
-                    }
-                    else if (seats1 - seats < 0) {
-                        alert("Not enough seats available");
-                    }
-                    else{
-			seats1 -= seats;
-                        const reservedSlotsString = JSON.stringify(reservedSlots);//Stringify to transfer JSON objects into local storage
-                        localStorage.setItem('reservedSlots', reservedSlotsString);//Transfer to local storage
-                        console.log(reservedSlotsString);
-			$("#available1").text(seats1);//Update seats value
-                        if(seats1 === 0){
-                            $("#lab1").css("backgroundColor", "red");
-                        }
-                    }
+                    $("#lab").val("lab1"); // Sets the text from total donation to your hidden input
                 }
 
                 function lb2(){
-                    console.log("Reserve to lab 2");
-                     var name = $("#name").val();//Get name value in input tag id name
-                    var idNum = $("#idNum").val();//Get idNum value in input tag id idNum
-                    var seats = $("#numSeats").val();//Get seats value in input tag id numSeats
-                    var date = $("#date").val();//Get date value in input tag id date
-		    
-                    const reserveL2 = {//Create an instance of a reserveL2 and set its values
-                        name: name,
-                        id: idNum,
-                        numOfSeats: seats,
-                        dateReserved: date
-                    };
-
-                    reservedSlots.push(reserveL2);//Push the lab 2 reservation inside the array reservedSlots
-                    console.log(seats);
-                    console.log(seats2);
-                    console.log(reserveL2);
-                    console.log(reservedSlots);
-                    console.log(name);
-
-                    if (idNum === "" || seats === "" || date ==="") {
-                        alert("Missing 1 or more fields");
-                    }
-                    else if(seats2 <= 0){
-                        alert("This lab is full");
-                    }
-                    else if (seats2 - seats < 0) {
-                        alert("Not enough seats available");
-                    }
-                    else {
-			seats2-=seats
-                        const reservedSlotsString = JSON.stringify(reservedSlots);//Stringify to transfer JSON objects into local storage
-                        localStorage.setItem('reservedSlots', reservedSlotsString);//Transfer to local storage
-                        console.log(reservedSlotsString);
-                        $("#available2").text(seats2);//Update seats value
-                        if(seats2 === 0){
-                            $("#lab2").css("backgroundColor", "red");
-                        }
-                    }
+                    $("#lab").val("lab2"); // Sets the text from total donation to your hidden input
                 }
 
                 function lb3(){
-                    console.log("Reserve to lab 3");
-                    var name = $("#name").val();//Get name value in input tag id name
-                    var idNum = $("#idNum").val();//Get idNum value in input tag id idNum
-                    var seats = $("#numSeats").val();//Get seats value in input tag id numSeats
-                    var date = $("#date").val();//Get date value in input tag id date
-
-                    const reserveL3 = {//Create an instance of a reserveL3 and set its values
-                        name: name,
-                        id: idNum,
-                        numOfSeats: seats,
-                        dateReserved: date
-                    };
-
-                    reservedSlots.push(reserveL3);//Push the lab 3 reservation inside the array reservedSlots
-                    console.log(seats);
-                    console.log(seats3);
-                    console.log(reserveL3);
-                    console.log(reservedSlots);
-                    console.log(name);
-
-                    if (idNum === "" || seats === "" || date ==="") {
-                        alert("Missing 1 or more fields");
-                    }
-                    else if(seats3 <= 0){
-                        alert("This lab is full");
-                    }
-                    else if (seats3 - seats < 0) {
-                        alert("Not enough seats available");
-                    }
-                    else {
-			seats3 -= seats;
-                        const reservedSlotsString = JSON.stringify(reservedSlots);//Stringify to transfer JSON objects into local storage
-                        localStorage.setItem('reservedSlots', reservedSlotsString);//Transfer to local storage
-                        console.log(reservedSlotsString);
-                        $("#available3").text(seats3);//Update seats value
-                        if(seats3 === 0){
-                            $("#lab3").css("backgroundColor", "red");
-                        }
-                    }
+                    $("#lab").val("lab3"); // Sets the text from total donation to your hidden input
                 }
             </script>
         </body>
