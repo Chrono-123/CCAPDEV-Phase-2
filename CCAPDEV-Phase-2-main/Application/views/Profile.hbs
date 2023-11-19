@@ -17,20 +17,20 @@
         </div>
 
         <form id ="profileForm" class="resizeSlightlySmaller">
-            <div id=profile>
-                <br>Name:  <input type="text" id="profileName" class="resizeSlightlySmaller"> <button type="button" id="editName" class="resizeSlightlySmaller" onClick="EditName()">Edit</button><br>
+            <div id="profile">
+                <br>Name: <input type="text" id="profileName" class="resizeSlightlySmaller" value="{{firstName}} {{lastName}}"> <button type="button" id="editName" class="resizeSlightlySmaller" onClick="EditName()">Edit</button><br>
             </div>
 
-            <div id=bday>
-                <br>Birthday:  <input type="date" id="profileBday" class="resizeSlightlySmaller"> <button type="button" id="editDob" class="resizeSlightlySmaller" onClick="EditDob()">Edit</button><br>
+            <div id="bday">
+                <br>Birthday:  <input type="date" id="profileBday" class="resizeSlightlySmaller" value="{{dateOfBirth}}"> <button type="button" id="editDob" class="resizeSlightlySmaller" onClick="EditDob()">Edit</button><br>
             </div>
 
             <div id="uName">
-               <br> Username:  <input type="text" id="profileUname" class="resizeSlightlySmaller"> <button type="button" id="editUserName" class="resizeSlightlySmaller" onClick="EditUserName()">Edit</button><br>
+                <br> UserName: <input type="text" id="profileUname" class="resizeSlightlySmaller" value="{{userName}}"> <button type="button" id="editUserName" class="resizeSlightlySmaller" onClick="EditUserName()">Edit</button><br>
             </div>
 
             <div id="password">
-                <br>Password:  <input type="password" id="profilePassword" class="resizeSlightlySmaller"> <button type="button" id="editPassword" class="resizeSlightlySmaller" onClick="EditPassword()">Edit</button><br>
+                <br> Password: <input type="text" id="profilePassword" class="resizeSlightlySmaller" value="{{password}}"> <button type="button" id="editPassword" class="resizeSlightlySmaller" onClick="EditPassword()">Edit</button><br>
             </div>
 
             <table id="reserveTable" class="resizeSlightlySmaller">
@@ -45,25 +45,6 @@
         </form>
     
         <script>
-            const currentUserProfileNameString = localStorage.getItem('currentUserProfileName');//Retrieve from local storage
-            const currentUserBirthdayString = localStorage.getItem('currentUserBirthday');//Retrieve from local storage
-            const currentUserUserNameString = localStorage.getItem('currentUserUserName');//Retrieve from local storage
-            const currentUserPasswordString = localStorage.getItem('currentUserPassword');//Retrieve from local storage
-            const registeredUsersString = localStorage.getItem('registeredUsers');//Retrieve from local storage
-            const registeredAdminsString = localStorage.getItem('registeredAdmins');//Retrieve from local storage
-            const currentUserProfileName = JSON.parse(currentUserProfileNameString);//Parse to get value
-            const currentUserBirthday = JSON.parse(currentUserBirthdayString);//Parse to get value
-            const currentUserUserName = JSON.parse(currentUserUserNameString);//Parse to get value
-            const currentUserPassword = JSON.parse(currentUserPasswordString);//Parse to get value
-            const registeredUsers = JSON.parse(registeredUsersString);//Parse to get value
-            const registeredAdmins = JSON.parse(registeredAdminsString);//Parse to get value
-            console.log(currentUserProfileName);
-            
-            document.getElementById("profileName").value = currentUserProfileName;//Set profileName to currentUserProfileName
-            document.getElementById("profileBday").value = currentUserBirthday;//Set profileBday to currentUserBirthday
-            document.getElementById("profileUname").value = currentUserUserName;//Set profileUname to currentUserUserName
-            document.getElementById("profilePassword").value = currentUserPassword;//Set profilePassword to currentUserPassword
-            
             const btnEditName = document.getElementById("profile");
             const btnEditBday = document.getElementById("bday");
             const btnEditUname = document.getElementById("uName");
@@ -79,52 +60,6 @@
 
             for (var i=0; i < 5; i++) {
                 $("#reserveTable").append("<tr><td>"+lab[i]+"</td><td>"+numberOfReserve[i]+"</td><td>"+date[i]+"</td>");
-            }
-
-            function updateUser(newName, newDob, newUserName, newPassword) {
-                for(var i = 0; i < registeredUsers.length; i++) {//Loop through the length of recorded registered users
-                    // console.log("UPDATE USER HAS RUN");
-                    if(currentUserUserName == registeredUsers[i].userName){ //Match username value and array of registered users
-                        console.log("OK");
-                        var newNameLength = newName.length;
-                        var newProfileName = newName.split(" ");
-                        var newLastName = newProfileName[newProfileName.length - 1];
-                        var newLastNameLength = newLastName.length;
-                        var newFirstName = newName.substr(0, newNameLength - newLastNameLength - 1);
-                        console.log(newName.split(" "));
-                        registeredUsers[i].firstName = newFirstName;
-                        registeredUsers[i].lastName = newLastName;
-                        registeredUsers[i].dateOfBirth = newDob;
-                        registeredUsers[i].userName = newUserName;
-                        registeredUsers[i].password = newPassword;
-                        const registeredUsersString = JSON.stringify(registeredUsers);//Stringify to transfer JSON objects into local storage
-                        localStorage.setItem('registeredUsers', registeredUsersString);//Transfer to local storage
-                    }
-                }
-
-                // console.log("length of admins", registeredAdmins.length);
-                // console.log("current username", currentUserUserName);
-                // for(var i = 0; i < registeredAdmins.length; i++) {//Loop through the length of recorded registered admins
-                //     // console.log("registered admins", registeredAdmins[i]);
-                //     if(currentUserUserName == registeredAdmins[i].userName){ //Match username value and array of registered admins
-                //         console.log("OK");
-                //         var newNameLength = newName.length;
-                //         var newProfileName = newName.split(" ");
-                //         var newLastName = newProfileName[newProfileName.length - 1];
-                //         var newLastNameLength = newLastName.length;
-                //         var newFirstName = newName.substr(0, newNameLength - newLastNameLength - 1);
-                //         console.log(newName.split(" "));
-                //         registeredAdmins[i].firstName = newFirstName;
-                //         registeredAdmins[i].lastName = newLastName;
-                //         registeredAdmins[i].dateOfBirth = newDob;
-                //         registeredAdmins[i].userName = newUserName;
-                //         registeredAdmins[i].password = newPassword;
-                //         const registeredAdminsString = JSON.stringify(registeredAdmins);//Stringify to transfer JSON objects into local storage
-                //         localStorage.setItem('registeredAdmins', registeredAdminsString);//Transfer to local storage
-                //         console.log(registeredAdmins[i]);
-                //         console.log(registeredAdmins[i].userName);
-                //     }
-                // }
             }
 
             function ChangePic() {

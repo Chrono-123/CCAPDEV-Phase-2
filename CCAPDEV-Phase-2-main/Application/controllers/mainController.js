@@ -156,6 +156,49 @@ const controller = {
             console.log("No lab designated!");
     },
 
+    searchType: function(req, res) {
+        const userName = req.body.userName;
+        const freeSlots = req.body.freeSlots;
+
+        if(userName == "") {
+            res.redirect(`/type/` + freeSlots);
+        } else if(freeSlots == "") {
+            res.redirect(`/type/` + userName);
+        } else
+            console.log("No type designated!");
+    },
+
+    getUserName: async function(req, res) {
+        const userName = req.params.userName;
+        var firstName;
+        var lastName;
+        var dateOfBirth;
+        var password;
+
+        await studentModel.findOne({userName: userName}).then(user => {
+            firstName = user.firstName;
+            lastName = user.lastName;
+            dateOfBirth = user.dateOfBirth;
+            password = user.password;
+        }).catch(error => {
+            console.log("Insert op error: " + error);
+        });
+
+        res.render(`Profile`, {firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, userName: userName, password: password});
+    },
+
+    getFreeSlots: function(req, res) {
+        const freeSlots = req.params.freeSlots;
+
+
+    },
+
+    // profile: function(req, res) {
+    //     const user = req.params.user;
+    //     console.log(user);
+    //     // res.render(`Profile`, {userName: user.userName})
+    // },
+
     editSlot: function(req, res) {
         res.render(`EditSlot`);
     },

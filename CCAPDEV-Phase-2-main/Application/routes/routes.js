@@ -30,6 +30,10 @@ app.get(`/viewSlot`, controller.viewSlot);
 app.post(`/reserve`, controller.reserve);
 app.get(`/lab/:lab`, controller.getLab);
 
-app.post(`/searchSlot`)
+app.post(`/searchType`, controller.searchType);
+app.get(`/type/:userName`, controller.getUserName);
+app.get(`/type/:freeSlots`, controller.getFreeSlots);
+
+// app.get(`/profile/:user`, controller.profile);
 
 module.exports = app;
