@@ -124,10 +124,10 @@ const controller = {
     },
 
     registerStudent: async function(req, res) {
-        // if (await accountExist(req.body.user) >= 1){
-        //     console.log("Username already exists");
-        //     res.redirect('/studentRegister'); 
-        // }else{
+        if (await accountExist(req.body.user) >= 1){
+            console.log("Username already exists");
+            res.redirect('/studentRegister'); 
+        }else{
             const student = new studentModel({
                 firstName: req.body.fName,
                 lastName: req.body.lName,
@@ -141,8 +141,8 @@ const controller = {
             }).catch(error => {
                 console.log("Insert op error: " + error);
             });
-            // res.redirect('/main');
-        // };
+            res.redirect('/main');
+        };
 
         res.redirect(`/`);
     },
