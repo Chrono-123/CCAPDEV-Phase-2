@@ -39,7 +39,13 @@ async function techAccountExist(user){
 };
 
 const controller = {
-    getMain: function(req, res) {
+    getMain: async function(req, res) {
+        await tempUserModel.findOneAndRemove().then(user => {
+            console.log("this is the user removed!!!", user);
+        }).catch(error => {
+            console.log("Insert op error: " + error);
+        });
+
         res.render(`main`);
     },
 
@@ -51,7 +57,6 @@ const controller = {
         const userName = req.body.user;
         const password = req.body.password;
         
-        // console.log(await studentModel.findOne({userName: userName}));
         const studentFound = studentModel.findOne({userName: userName, password: password}).then(user => {
             console.log("User found: ");
             console.log(user);
@@ -76,13 +81,11 @@ const controller = {
 
         if(studentFound){
             res.redirect(`/home/` + userName);
-            // res.send({userName: userName});
         }
     },
 
     getStudent: function(req, res) {
         const userName = req.params.userName;
-        // var password = req.params.password;
 
         res.render(`Home`, { userName: userName });
     },
