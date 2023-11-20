@@ -4,6 +4,7 @@ const lab2Model = require('../models/lab2Schema.js');
 const lab3Model = require('../models/lab3Schema.js');
 const studentModel = require('../models/studentSchema.js');
 const labTechModel = require('../models/labTechSchema.js');
+const tempUserModel = require('../models/temporaryUserSchema.js');
 
 async function accountExist(user) {
     const exists = await studentModel.find({
@@ -51,21 +52,38 @@ const controller = {
         const password = req.body.password;
         
         // console.log(await studentModel.findOne({userName: userName}));
-        studentModel.findOne({userName: userName, password: password}).then(user => {
+        const studentFound = studentModel.findOne({userName: userName, password: password}).then(user => {
             console.log("User found: ");
             console.log(user);
             console.log(user.password);
-            res.redirect(`/home/` + userName);
+            const tempUser = new tempUserModel({
+                firstName: user.firstName,
+                lastName: user.lastName,
+                dateOfBirth: user.dateOfBirth,
+                userName: user.userName,
+                password: user.password
+            });
+
+            tempUser.save().then(val => {
+                console.log("Insert successful: ");
+                console.log(val);
+            }).catch(error => {
+                console.log("Insert op error: " + error);
+            });
         }).catch(error => {
             console.log("Insert op error: " + error);
         });
+
+        if(studentFound){
+            res.redirect(`/home/` + userName);
+            // res.send({userName: userName});
+        }
     },
 
     getStudent: function(req, res) {
         const userName = req.params.userName;
         // var password = req.params.password;
 
-        console.log(userName);
         res.render(`Home`, { userName: userName });
     },
 
@@ -89,13 +107,6 @@ const controller = {
     },
 
     registerStudent: async function(req, res) {
-        const student = new studentModel({
-            firstName: req.body.fName,
-            lastName: req.body.lName,
-            dateOfBirth: req.body.birth,
-            userName: req.body.user,
-            password: req.body.password
-        });
         if (await accountExist(req.body.user) >= 1){
             console.log("Username already exists");
             res.redirect('/studentRegister'); 
@@ -259,12 +270,6 @@ const controller = {
 
     },
 
-    // profile: function(req, res) {
-    //     const user = req.params.user;
-    //     console.log(user);
-    //     // res.render(`Profile`, {userName: user.userName})
-    // },
-
     editSlot: function(req, res) {
         res.render(`EditSlot`);
     },
@@ -277,9 +282,27 @@ const controller = {
         res.render(`Search`);
     },
 
-    profile: function(req, res) {
-        res.render(`Profile`);
-    },
+    profile: async function(req, res) {
+        var firstName;
+        var lastName;
+        var dateOfBirth;
+        var userName;
+        var password;
+
+        await tempUserModel.findOne().then(user => {
+            firstName = user.firstName;
+            lastName = user.lastName;
+            dateOfBirth = user.dateOfBirth;
+            userName = user.userName;
+            password = user.password;
+
+            console.log("this is the user!!!", user);
+        }).catch(error => {
+            console.log("Insert op error: " + error);
+        });
+
+        res.render(`Profile`, {firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, userName: userName, password: password});
+    }
 }
 
 module.exports = controller;
