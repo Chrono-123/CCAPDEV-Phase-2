@@ -34,13 +34,13 @@
                     <br> Password: <input type="text" id="profilePassword" class="resizeSlightlySmaller" value="{{password}}" name = "password"> <button type="button" id="editPassword" class="resizeSlightlySmaller" onClick="EditPassword()">Edit</button><br>
                 </div>
 
-                <table id="reserveTable" class="resizeSlightlySmaller">
+                {{!-- <table id="reserveTable" class="resizeSlightlySmaller">
                     <tr>
                         <th>Lab Number</th>
                         <th>Number Reserved</th>
                         <th>Date to be Reserved</th>
                     </tr>
-                </table>
+                </table> --}}
                 
                 <input type="hidden" id="deleteInfo" name = "delete"/>
                 <input type="hidden" id="updateInfo" name = "update"/>
@@ -50,23 +50,6 @@
         </fieldset>
     
         <script>
-            const btnEditName = document.getElementById("profile");
-            const btnEditBday = document.getElementById("bday");
-            const btnEditUname = document.getElementById("uName");
-            const btnEditPassword = document.getElementById("password");
-            var newName, newDob, newUserName, newPassword;
-            document.getElementById("profileName").readOnly=true;
-            document.getElementById("profileBday").readOnly=true;
-            document.getElementById("profileUname").readOnly=true;
-            document.getElementById("profilePassword").readOnly=true;
-            const lab = [2,1,2,3,1];
-            const numberOfReserve = [4,2,3,2,9];
-            const date = ["12/11/23", "12/10/23", "11/20/23", "10/10/23", "09/10/23"];
-
-            for (var i=0; i < 5; i++) {
-                $("#reserveTable").append("<tr><td>"+lab[i]+"</td><td>"+numberOfReserve[i]+"</td><td>"+date[i]+"</td>");
-            }
-
             function ChangePic() {
 
             }

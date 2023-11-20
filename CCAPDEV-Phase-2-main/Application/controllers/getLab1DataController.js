@@ -10,4 +10,5 @@ const lab1DataController = {
             res.send(data);
     }
 }
+
 module.export = lab1DataController;

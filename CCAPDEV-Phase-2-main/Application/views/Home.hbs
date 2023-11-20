@@ -11,10 +11,15 @@
         {{> navBar login=true}}
         <body>
             <div class="lbTemplate">
-                <h3 style="text-align: center;">Which Lab do you want to check?</h3>
-                <button type="button" id="lab1" onClick="lb1()" class="Lab">Lab 1</button>
-                <button type="button" id="lab2" onClick="lb2()" class="Lab">Lab 2</button>
-                <button type="button" id="lab3" onClick="lb3()" class="Lab">Lab 3</button>
+                <fieldset>
+                    <form action="/loadLab" method="post">
+                        <input type="hidden" id="lab" name = "lab"/>
+                        <h3 style="text-align: center;">Which Lab do you want to check?</h3>
+                        <button type="submit" id="lab1" onClick="lb1()" class="Lab">Lab 1</button>
+                        <button type="submit" id="lab2" onClick="lb2()" class="Lab">Lab 2</button>
+                        <button type="submit" id="lab3" onClick="lb3()" class="Lab">Lab 3</button>
+                    </form>
+                </fieldset>
             </div>
             
             <div id = Seatlist>
@@ -24,18 +29,15 @@
 
             <script>
                 function lb1(){
-                    console.log("Opened lab 1");
-                    $(location).attr("href", "./reservation/Lab1ReservationList.html");
+                    $("#lab").val("lab1"); // Sets the text from total donation to your hidden input
                 }
 
                 function lb2(){
-                    console.log("Opened lab 2");
-                    $(location).attr("href", "./reservation/Lab2ReservationList.html");
+                    $("#lab").val("lab2"); // Sets the text from total donation to your hidden input
                 }
 
                 function lb3(){
-                    console.log("Opened lab 3");
-                    $(location).attr("href", "./reservation/Lab3ReservationList.html");
+                    $("#lab").val("lab3"); // Sets the text from total donation to your hidden input
                 }
             </script>
         </body>

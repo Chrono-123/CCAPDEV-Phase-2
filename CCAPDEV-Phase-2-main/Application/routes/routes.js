@@ -1,8 +1,5 @@
 const express = require('express');
 const controller = require('../controllers/mainController.js');
-const labModel = require('../models/lab1Schema.js');
-const studentModel = require('../models/studentSchema.js');
-const labTechModel = require('../models/labTechSchema.js');
 const app = express();
 
 app.get(`/`, controller.getMain);
@@ -23,12 +20,18 @@ app.get(`/reservation`, controller.reservation);
 app.get(`/search`, controller.search);
 app.get(`/profile`, controller.profile);
 
+app.post(`/loadLab`, controller.loadLab);
+
 app.get(`/reserveSlot`, controller.reserveSlot);
 app.get(`/editSlot`, controller.editSlot);
 app.get(`/viewSlot`, controller.viewSlot);
 
 app.post(`/reserve`, controller.reserve);
 app.get(`/lab/:lab`, controller.getLab);
+
+app.post(`/slot`, controller.slot)
+app.get(`/viewSlot/:lab`, controller.getSlot);
+// app.get(`/slots/:reservation`, controller.getReservation);
 
 app.post(`/searchType`, controller.searchType);
 app.get(`/type/:userName`, controller.getUserName);

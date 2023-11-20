@@ -1,68 +1,44 @@
-<DOCTYPE!>
-    <!--This html page is for both the lab technician and student to view their slots-->
+<DOCTYPE! html>
     <html>
+        <!--Home page of normal users have three lab buttons to view the available slots within 7 days from the current date-->
         <title>View Slot</title>
-
+        
         <head>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <link rel="stylesheet" href="/css/template.css">
         </head>
 
         {{> navBar login=true}}
         <body>
-            <div id="viewSlots" class="viewSlot btnCenter">
-                <br><br><br><br><br><br>
-                <label class="resize" style="color: black; font-weight: bold;">View Slots</label><br><br>
-                <table id="reserveTable" class="resize">
-                    <tr>
-                        <th id = "reservedSlotsName">Name</th>
-                        <th id = "reservedSlotsIdNumber">ID Number</th>
-                        <th id = "reservedSlotsSeats">Seats</th>
-                        <th id = "reservedSlotsDate">Date</th>
-                    </tr>
-                </table>
+            <div class="lbTemplate">
+                <fieldset>
+                    <form action="/slot" method="post">
+                        <input type="hidden" id="lab" name = "lab"/>
+                        <h3 style="text-align: center;">Which Lab do you want to check?</h3>
+                        <button type="submit" id="lab1" onClick="lb1()" class="Lab">Lab 1</button>
+                        <button type="submit" id="lab2" onClick="lb2()" class="Lab">Lab 2</button>
+                        <button type="submit" id="lab3" onClick="lb3()" class="Lab">Lab 3</button>
+                    </form>
+                </fieldset>
+            </div>
+            
+            <div id = Seatlist>
+                <p id = Seatdaylist><br></p>
+                <p id = Seathourlist></p>
             </div>
 
             <script>
-                const reservedSlotsString = localStorage.getItem('reservedSlots');//Retrieve from local storage
-                const currentUserUserNameString = localStorage.getItem('currentUserUserName')//Retrieve from local storage
-                const reservedSlots = JSON.parse(reservedSlotsString);//Parse to get value
-                const currentUserUserName = JSON.parse(currentUserUserNameString);//Parse to get value
-                console.log(reservedSlots);
-                console.log(currentUserUserName);
-                console.log(reservedSlots[0].name);
-
-                for(var i = 0; i < reservedSlots.length; i++) {
-                    if(currentUserUserName == reservedSlots[i].name)
-                    {
-                        // document.querySelector("#reservedSlotsName").textContent = reservedSlots[i].name;//Select p tag id reservedSlotsName and set the text to reservedSlots[i].name
-                        // document.querySelector("#reservedSlotsIdNumber").textContent = reservedSlots[i].id;//Select p tag id reservedSlotsIdNumber and set the text to reservedSlots[i].id
-                        // document.querySelector("#reservedSlotsSeats").textContent = reservedSlots[i].numOfSeats;//Select p tag id reservedSlotsSeats and set the text to reservedSlots[i].numOfSeats
-                        // document.querySelector("#reservedSlotsDate").textContent = reservedSlots[i].dateReserved;//Select p tag id reservedSlotsDate and set the text to reservedSlots[i].dateReserved
-                        // const cloneReservedSlotsName = document.getElementById("reservedSlotsName").cloneNode(true);//Clone p tag id reservedSlotsName
-                        // const cloneReservedSlotsIdNumber = document.getElementById("reservedSlotsIdNumber").cloneNode(true);//Clone p tag id reservedSlotsIdNumber
-                        // const cloneReservedSlotsSeats = document.getElementById("reservedSlotsSeats").cloneNode(true);//Clone p tag id reservedSlotsSeats
-                        // const cloneReservedSlotsDate = document.getElementById("reservedSlotsDate").cloneNode(true);//Clone p tag id reservedSlotsDate
-                        // document.getElementById("viewSlots").append(cloneReservedSlotsName);//Append clone to the p tag id viewSlots
-                        // document.getElementById("viewSlots").append(cloneReservedSlotsIdNumber);//Append clone to the p tag id viewSlots
-                        // document.getElementById("viewSlots").append(cloneReservedSlotsSeats);//Append clone to the p tag id viewSlots
-                        // document.getElementById("viewSlots").append(cloneReservedSlotsDate);//Append clone to the p tag id viewSlots
-                        // console.log(cloneReservedSlotsName);
-                        // console.log(cloneReservedSlotsIdNumber);
-                        // console.log(cloneReservedSlotsSeats);
-                        // console.log(cloneReservedSlotsDate);
-                    }
+                function lb1(){
+                    $("#lab").val("lab1"); // Sets the text from total donation to your hidden input
                 }
 
-                for(var i = 0; i < reservedSlots.length; i++)
-                {
-                    $("#reserveTable").append("<tr><td>"+reservedSlots[i].name+"</td><td>"+reservedSlots[i].id+"</td><td>"+reservedSlots[i].numOfSeats+"</td><td>"+reservedSlots[i].dateReserved+"</td>");
+                function lb2(){
+                    $("#lab").val("lab2"); // Sets the text from total donation to your hidden input
                 }
 
-                // document.getElementById("reservedSlotsName").innerHTML = "";//Set non-clone values to blank to not duplicate
-                // document.getElementById("reservedSlotsIdNumber").innerHTML = "";//Set non-clone values to blank to not duplicate
-                // document.getElementById("reservedSlotsSeats").innerHTML = "";//Set non-clone values to blank to not duplicate
-                // document.getElementById("reservedSlotsDate").innerHTML = "";//Set non-clone values to blank to not duplicate
+                function lb3(){
+                    $("#lab").val("lab3"); // Sets the text from total donation to your hidden input
+                }
             </script>
         </body>
     </html>

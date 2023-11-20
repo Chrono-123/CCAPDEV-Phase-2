@@ -124,6 +124,7 @@ const controller = {
     },
 
     registerStudent: async function(req, res) {
+        console.log(accountExist(req.body.user));
         if (await accountExist(req.body.user) >= 1){
             console.log("Username already exists");
             res.redirect('/studentRegister'); 
@@ -135,16 +136,15 @@ const controller = {
                 userName: req.body.user,
                 password: req.body.password
             });
+
             student.save().then(val => {
-                console.log("Insert successful: ");
-                console.log(val);
             }).catch(error => {
                 console.log("Insert op error: " + error);
             });
-            res.redirect('/main');
+            
+            res.redirect(`/`);
         };
 
-        res.redirect(`/`);
     },
 
     registerTech: async function(req, res) {
@@ -171,6 +171,14 @@ const controller = {
     
     home: function(req, res) {
         res.render(`Home`);
+    },
+
+    loadLab: function(req, res) {
+        const lab = req.body.lab;
+
+        console.log(lab);
+
+        res.redirect(`/lab/` + lab);
     },
 
     reservation: function(req, res) {
@@ -235,13 +243,24 @@ const controller = {
             res.redirect(`/lab/` + lab);
         } else
             console.log("No lab designated!");
+        
+        
     },
 
-    getLab: function(req, res) {
+    getLab: async function(req, res) {
         const lab = req.params.lab
 
+        console.log("I AM THE LAB:", lab);
+
         if(lab == "lab1") {
-            res.render(`Lab1`);
+            await lab1Model.find({}).then(registrations => {
+                // console.log(registrations);
+                
+                res.render(`Lab1`, {registrations: registrations});
+            }).catch(error => {
+                console.log("Insert op error: " + error);
+            });
+
         } else if(lab == "lab2") {
             res.render(`Lab2`);
         } else if(lab == "lab3") {
@@ -291,8 +310,47 @@ const controller = {
         res.render(`EditSlot`);
     },
 
-    viewSlot: function(req, res) {
+    viewSlot: async function(req, res) {
         res.render(`ViewSlot`);
+    },
+
+    slot: function(req, res) {
+        const lab = req.body.lab;
+
+        res.redirect(`/viewSlot/` + lab)
+    },
+
+    getSlot: async function(req, res) {
+        const lab = req.params.lab;
+        var userName;
+
+        await tempUserModel.findOne().then(user => {
+            userName = user.userName;
+        });
+
+        if(lab == "lab1") { 
+            await lab1Model.find({name: userName}).then(lab1Reservations => {
+                console.log(lab1Reservations);
+                lab1Reservations = lab1Reservations;
+
+                res.render(`Slot`, {lab1Reservations: lab1Reservations});
+            });
+        } else if (lab == "lab2") { 
+            await lab2Model.find({name: userName}).then(lab2Reservations => {
+                console.log(lab2Reservations);
+                lab2Reservations = lab2Reservations;
+
+                res.render(`Slot`, {lab2Reservations: lab2Reservations});
+            });
+        } else if(lab == "lab3") { 
+            await lab3Model.find({name: userName}).then(lab3Reservations => {
+                console.log(lab3Reservations);
+                lab3Reservations = lab3Reservations;
+
+                res.render(`Slot`, {lab3Reservations: lab3Reservations});
+            });
+        } else 
+            console.log("No lab designated!");
     },
 
     search: function(req, res) {
@@ -328,6 +386,7 @@ const controller = {
         const password = req.body.password;
         const del = req.body.delete;
         const up = req.body.update
+        var tempUserName;
 
         if(del == "delete") {
             await studentModel.findOneAndRemove({userName: userName}).then(user => {
@@ -345,40 +404,48 @@ const controller = {
             res.redirect(`/profile/` + del);
         } else if(up == "update") {
             try {
-                await studentModel.findByIdAndUpdate(findUserId(userName), {
+                await tempUserModel.findOne().then(user => {
+                    tempUserName = user.userName;
+                });
+            } catch (err) {
+                console.log(err)
+            }
+            
+            try {
+                console.log("inside1");
+                await studentModel.findOneAndUpdate({userName: tempUserName}, {
                     firstName: firstName,
                     lastName: "",
                     dateOfBirth: dateOfBirth,
                     userName: userName,
-                    password: password
-                });
-                
+                    password: password,
+                })
             } catch (err) {
                 console.log(err)
             }
 
             try {
-                await labTechModel.findByIdAndUpdate(findUserId(userName), {
-                    firstName: firstName,
+                console.log("inside2");
+                await labTechModel.findOneAndUpdate({userName: tempUserName}, {
+                    firstName: req.body.name,
                     lastName: "",
-                    dateOfBirth: dateOfBirth,
-                    userName: userName,
-                    password: password
-                });
-                
+                    dateOfBirth: req.body.dateOfBirth,
+                    userName: req.body.userName,
+                    password: req.body.password,
+                })
             } catch (err) {
                 console.log(err)
             }
 
             try {
-                await tempUserModel.findByIdAndUpdate(findUserId(userName), {
-                    firstName: firstName,
+                console.log("inside3");
+                await tempUserModel.findOneAndUpdate({userName: tempUserName}, {
+                    firstName: req.body.name,
                     lastName: "",
-                    dateOfBirth: dateOfBirth,
-                    userName: userName,
-                    password: password
-                });
-                
+                    dateOfBirth: req.body.dateOfBirth,
+                    userName: req.body.userName,
+                    password: req.body.password,
+                })
             } catch (err) {
                 console.log(err)
             }
@@ -390,6 +457,8 @@ const controller = {
 
     getStatus: function(req, res) {
         const status = req.params.status
+
+        console.log("this is statues", status);
 
         if(status == "update") {
             res.render(`Profile`);
