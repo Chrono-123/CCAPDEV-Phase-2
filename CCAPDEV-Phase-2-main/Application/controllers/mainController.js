@@ -1,4 +1,5 @@
 // const db = require('../app.js');
+const mongoose = require('mongoose');
 const lab1Model = require('../models/lab1Schema.js');
 const lab2Model = require('../models/lab2Schema.js');
 const lab3Model = require('../models/lab3Schema.js');
@@ -36,6 +37,19 @@ async function techAccountExist(user){
     }else{
         return 1;
     };
+};
+
+async function findUserId(userName){
+    var userId;
+
+    const user = await labTechModel.find({userName: userName}).then(user => {
+        console.log("this is the user", user);
+        userId =  mongoose.Types.ObjectId(user.id);
+    }).catch(error => {
+        console.log("Insert op error: " + error);
+    });
+
+    return userId;
 };
 
 const controller = {
@@ -110,10 +124,10 @@ const controller = {
     },
 
     registerStudent: async function(req, res) {
-        if (await accountExist(req.body.user) >= 1){
-            console.log("Username already exists");
-            res.redirect('/studentRegister'); 
-        }else{
+        // if (await accountExist(req.body.user) >= 1){
+        //     console.log("Username already exists");
+        //     res.redirect('/studentRegister'); 
+        // }else{
             const student = new studentModel({
                 firstName: req.body.fName,
                 lastName: req.body.lName,
@@ -127,10 +141,10 @@ const controller = {
             }).catch(error => {
                 console.log("Insert op error: " + error);
             });
-            res.redirect('/main');
-        };
+            // res.redirect('/main');
+        // };
 
-        res.render(`main`);
+        res.redirect(`/`);
     },
 
     registerTech: async function(req, res) {
@@ -305,6 +319,84 @@ const controller = {
         });
 
         res.render(`Profile`, {firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, userName: userName, password: password});
+    },
+
+    updateAndDelete: async function(req, res) {
+        const firstName = req.body.name;
+        const dateOfBirth = req.body.dateOfBirth;
+        const userName = req.body.userName;
+        const password = req.body.password;
+        const del = req.body.delete;
+        const up = req.body.update
+
+        if(del == "delete") {
+            await studentModel.findOneAndRemove({userName: userName}).then(user => {
+                console.log("this is the user removed!!!", user);
+            }).catch(error => {
+                console.log("Insert op error: " + error);
+            });
+
+            await labTechModel.findOneAndRemove({userName: userName}).then(user => {
+                console.log("this is the user removed!!!", user);
+            }).catch(error => {
+                console.log("Insert op error: " + error);
+            });
+
+            res.redirect(`/profile/` + del);
+        } else if(up == "update") {
+            try {
+                await studentModel.findByIdAndUpdate(findUserId(userName), {
+                    firstName: firstName,
+                    lastName: "",
+                    dateOfBirth: dateOfBirth,
+                    userName: userName,
+                    password: password
+                });
+                
+            } catch (err) {
+                console.log(err)
+            }
+
+            try {
+                await labTechModel.findByIdAndUpdate(findUserId(userName), {
+                    firstName: firstName,
+                    lastName: "",
+                    dateOfBirth: dateOfBirth,
+                    userName: userName,
+                    password: password
+                });
+                
+            } catch (err) {
+                console.log(err)
+            }
+
+            try {
+                await tempUserModel.findByIdAndUpdate(findUserId(userName), {
+                    firstName: firstName,
+                    lastName: "",
+                    dateOfBirth: dateOfBirth,
+                    userName: userName,
+                    password: password
+                });
+                
+            } catch (err) {
+                console.log(err)
+            }
+
+            res.redirect(`/profile/` + up);
+        } else
+            console.log("No status designated!");
+    },
+
+    getStatus: function(req, res) {
+        const status = req.params.status
+
+        if(status == "update") {
+            res.render(`Profile`);
+        } else if(status == "delete") {
+            res.redirect(`/`);
+        } else
+            console.log("No status designated!");
     }
 }
 

@@ -16,33 +16,38 @@
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" id="profilePic" onClick="ChangePic()"><br>
         </div>
 
-        <form id ="profileForm" class="resizeSlightlySmaller">
-            <div id="profile">
-                <br>Name: <input type="text" id="profileName" class="resizeSlightlySmaller" value="{{firstName}} {{lastName}}"> <button type="button" id="editName" class="resizeSlightlySmaller" onClick="EditName()">Edit</button><br>
-            </div>
+        <fieldset>
+            <form id ="profileForm" class="resizeSlightlySmaller" action="/updateAndDelete" method="post">
+                <div id="profile">
+                    <br>Name: <input type="text" id="profileName" class="resizeSlightlySmaller" value="{{firstName}} {{lastName}}" name = "name"> <button type="button" id="editName" class="resizeSlightlySmaller" onClick="EditName()">Edit</button><br>
+                </div>
 
-            <div id="bday">
-                <br>Birthday:  <input type="date" id="profileBday" class="resizeSlightlySmaller" value="{{dateOfBirth}}"> <button type="button" id="editDob" class="resizeSlightlySmaller" onClick="EditDob()">Edit</button><br>
-            </div>
+                <div id="bday">
+                    <br>Birthday:  <input type="date" id="profileBday" class="resizeSlightlySmaller" value="{{dateOfBirth}}" name = "dateOfBirth"> <button type="button" id="editDob" class="resizeSlightlySmaller" onClick="EditDob()">Edit</button><br>
+                </div>
 
-            <div id="uName">
-                <br> UserName: <input type="text" id="profileUname" class="resizeSlightlySmaller" value="{{userName}}"> <button type="button" id="editUserName" class="resizeSlightlySmaller" onClick="EditUserName()">Edit</button><br>
-            </div>
+                <div id="uName">
+                    <br> UserName: <input type="text" id="profileUname" class="resizeSlightlySmaller" value="{{userName}}" name = "userName"> <button type="button" id="editUserName" class="resizeSlightlySmaller" onClick="EditUserName()">Edit</button><br>
+                </div>
 
-            <div id="password">
-                <br> Password: <input type="text" id="profilePassword" class="resizeSlightlySmaller" value="{{password}}"> <button type="button" id="editPassword" class="resizeSlightlySmaller" onClick="EditPassword()">Edit</button><br>
-            </div>
+                <div id="password">
+                    <br> Password: <input type="text" id="profilePassword" class="resizeSlightlySmaller" value="{{password}}" name = "password"> <button type="button" id="editPassword" class="resizeSlightlySmaller" onClick="EditPassword()">Edit</button><br>
+                </div>
 
-            <table id="reserveTable" class="resizeSlightlySmaller">
-                <tr>
-                    <th>Lab Number</th>
-                    <th>Number Reserved</th>
-                    <th>Date to be Reserved</th>
-                </tr>
-            </table>
-            
-            <br><button type="button" id="deleteProfile" class="resizeSlightlySmaller" onClick="Delete()">Delete Profile</button><br>
-        </form>
+                <table id="reserveTable" class="resizeSlightlySmaller">
+                    <tr>
+                        <th>Lab Number</th>
+                        <th>Number Reserved</th>
+                        <th>Date to be Reserved</th>
+                    </tr>
+                </table>
+                
+                <input type="hidden" id="deleteInfo" name = "delete"/>
+                <input type="hidden" id="updateInfo" name = "update"/>
+                <br><button type="submit" id="updateProfile" class="resizeSlightlySmaller" onClick="Update()">Update Profile</button><br>
+                <br><button type="submit" id="deleteProfile" class="resizeSlightlySmaller" onClick="Delete()">Delete Profile</button><br>
+            </form>
+        </fieldset>
     
         <script>
             const btnEditName = document.getElementById("profile");
@@ -181,6 +186,16 @@
                 console.log(currentUserPassword);
 
                 updateUser(newName, newDob ,newUserName, newPassword);
+            }
+
+            function Update() {
+                $("#updateInfo").val("update");
+                $("#deleteInfo").val("");
+            }
+
+            function Delete() {
+                $("#deleteInfo").val("delete");
+                $("#updateInfo").val("");
             }
         </script>
     </body>

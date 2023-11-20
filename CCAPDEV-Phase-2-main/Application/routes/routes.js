@@ -34,6 +34,8 @@ app.post(`/searchType`, controller.searchType);
 app.get(`/type/:userName`, controller.getUserName);
 app.get(`/type/:freeSlots`, controller.getFreeSlots);
 
+app.post(`/updateAndDelete`, controller.updateAndDelete);
+app.get(`/profile/:status`, controller.getStatus);
 // app.get(`/profile/:user`, controller.profile);
 
 module.exports = app;
