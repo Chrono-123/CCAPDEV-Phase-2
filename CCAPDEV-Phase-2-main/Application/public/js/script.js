@@ -12,6 +12,10 @@ const register = document.querySelector('#register'); //registers account
 // const reserve = document.querySelector('#reserveBtn'); //goes to page to reserve slots
 // const confirmReservation = document.querySelector('#reserveSlot'); //confirms reservation
 
+// for hiding and showing password field
+const eye = document.querySelector('#eye');
+const pw = document.querySelector('#profilePassword');
+
 //error message tag
 const loginError = document.querySelector('#loginError'); //error if user logs in with invalid information (account)
 const regError = document.querySelector('#regError'); //error if user registers with invalid information (account)
@@ -92,23 +96,15 @@ register?.addEventListener("click", async function(e){ //confirms registration
     }
 });
 
+eye.addEventListener("click", function(){
+    this.classList.toggle("fa-eye-slash")
+    const type = pw.getAttribute("type") === "password" ? "text" : "password"
+    pw.setAttribute("type", type)
+});
+
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
-
-eye.addEventListener("click", function(){
-    const i = document.querySelector('#eye');
-    const pw = document.querySelector('#profilePassword');
-    if (pw.getAttribute("type") == "password") {
-        pw.setAttribute("type", "text");
-        i.classList.add("fa-eye-slash");
-        i.classList.remove("fa-eye");
-    } else {
-        pw.setAttribute("type", "password");
-        i.classList.add("fa-eye");
-        i.classList.remove("fa-eye-slash");
-    }
-})
 
 // lab2?.addEventListener("click", async function(e){ 
 //     e.preventDefault();
