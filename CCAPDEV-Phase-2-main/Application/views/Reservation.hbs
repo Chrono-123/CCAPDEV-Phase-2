@@ -1,0 +1,20 @@
+<html>
+    <!--This html page is for students to reserve, edit or view slot reservations-->
+    <title>Reservation</title>
+
+    <head>
+	    <script src = 'http://localhost:3000/js/script.js' defer></script>
+        <link rel="stylesheet" href="/css/template.css">
+    </head>
+
+    {{> navBar login=true}}
+    <body>
+        <div class="btnCenter main">
+            <h1>Reservation</h1>
+            <button type="button" id="reserve" class="bigBtn"><a href="/reserveSlot">Reserve Slot</a></button><br><br>
+            <button type="button" id="edit" class="bigBtn"><a href="/editSlot">Edit Reservation</a></button><br><br>
+            <button type="button" id="view" class="bigBtn"><a href="/viewSlot">View Slot Reservation</a></button><br><br>
+            <button type="button" id="back" class="bigBtn"><a href="/home">Back</a></button>
+        </div>
+    </body>
+</html>

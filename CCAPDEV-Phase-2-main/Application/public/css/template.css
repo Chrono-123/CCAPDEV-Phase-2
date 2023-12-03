@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
+:root {
+    font-family: 'Montserrat', sans-serif;
+    background-image: url("../images/Comp Lab BG png.png");
+}
+
+html, body {
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+}
+.login{
+    text-align: left;
+    margin: 5%;
+    position: relative;
+}
+.infoReg{
+    border-radius: 20px;
+}
+.infoLogin{
+    border-radius: 20px;
+}
+.form{
+    border-radius: 20px;
+}
+.regType{
+    text-align: left;
+    padding-left: 600px;
+    padding-top:150px;
+}
+.reg{
+    text-align: left;
+    padding-left: 590px;
+    padding-top:160px;
+}
+
+.header, .footer {
+    background-color: #007000;
+    width: 100%;
+    height: 40px;
+    margin: 0px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0px;
+}
+
+.main{
+    position: relative;
+    top: 130px;
+    margin: auto;
+    padding: 5px;
+    padding-bottom: 20px;
+    width: 40%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 20px;
+}
+.title{
+    text-align: center;
+    color: white;
+}
+.btnCenter{
+    /* padding-top:150px; */
+    text-align: center;
+}
+.resize{
+    font-size: 35px;
+    block-size: 35px;
+}
+.resizeSlightlySmaller{
+    font-size: 25px;
+    block-size: 25px;
+}
+.mainBtn{
+    width: 500px;
+    height: 75px;
+    font-size: 50px;
+    background-color: blue;
+    color: chartreuse;
+}
+.bigBtn{
+    width: 550px;
+    height: 75px;
+    font-size: 30px;
+    background-color: green;
+    color: white;
+    opacity: 1;
+}
+.smallBtn{
+    width: 200px;
+    height: 30px;
+    font-size: 20px;
+    background-color: green;
+    color: white;
+    opacity: 1;
+}
+.bigBtn:hover{
+    background-color: yellow;
+}
+.reserveRequest{
+    text-align: left;
+    padding-left: 585px;
+    padding-top:205px;
+}
+button.Lab{
+    font-size: 20px;
+    width: 100px;
+    height: 100px;
+    padding: 19px;
+    margin: 23px;
+    float:left;
+    border-color: black;
+    /* border-style: solid; */
+    background-color: green;
+}
+.lbTemplate{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.colorWhite{
+    color: white;
+}
+.Lab:hover{
+    background-color: yellow;
+}
+#name{
+    margin-left: 85px;
+}
+#idNum{
+    margin-left: 55px;
+}
+#numSeats{
+    margin-left: 25px;
+}
+div.graybox {
+    height: 300;
+    width: 600;
+    border-radius: 25px;
+    border-color: gray;
+    border: 3px solid;
+    background-color: gray;
+    opacity: 0.7;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+#profilePic{
+    width: 175px;
+    height: 175px;
+    margin: 20 20 20 20;
+}
+#profileName{
+    margin-left: 27px;
+}
+#profileBday{
+    margin-left: 10px;
+}
+#profilePassword{
+    margin-left: 4px;
+}
+
+.profDiv {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profImg {
+    align-items: flex-start;
+}
+
+.profInfo {
+    font-size: 25px;
+}
+
+#updateProfile,
+#deleteProfile {
+    font-size: 25px;
+    color: white;
+    background-color: green;
+}
+
+#updateProfile:hover,
+#deleteProfile:hover {
+    font-size: 25px;
+    color: white;
+    background-color: yellowgreen;
+}
+
+#stickyBar{
+    border-style: solid;
+    background-color: green;
+    border-width: 1px;
+    border-color: rgb(93,93,93);
+    overflow: hidden;
+    display: flex;
+    position: fixed;
+    top: 0;
+    height: 60px;
+    width: -webkit-fill-available;
+    align-items: center;
+}
+#stickyBar a {
+    float: right;
+    display: flex;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    font-size: 22px;
+    font-style: bold;
+    flex-grow: 1;
+    height: max-content;
+  }
+#stickyBar a:hover{
+    background-color: grey;
+  }
+#stickyBar h2 {
+    margin-left: 20px;
+    flex-grow: 15;
+}
+    
+.table {
+    display: table;
+}
+.tRow {
+    display: table-row;
+}
+.tCell {
+    display: table-cell;
+}
+.tColumns {
+    display: table-column;
+}
+
+#reserveTable{
+    padding-top: 20px;
+    text-align: center;
+    margin-left: auto; 
+    margin-right: auto
+}
+#reserveTable th{
+    background-color: green;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+#reserveTable td{
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+#seatList Table{
+	margin-top:90px;
+	padding-left: 25px;
+}

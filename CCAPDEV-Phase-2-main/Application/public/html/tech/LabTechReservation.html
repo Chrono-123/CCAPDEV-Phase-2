@@ -1,0 +1,48 @@
+<html>
+    <!--This html page is for lab technicians to reserve without limitations. Lab technicians are allowed to delete slot reservations-->
+    <title>Lab Tech Reservation</title>
+    
+    <head>
+        <div id="stickyBar">
+            <h2>Laboratory Reservation</h2>
+            <a href="LabTechHome.html">Home</a>
+            <a href="LabTechReservation.html">Reserve</a>
+            <a href="LabTechSearch.html">Search</a>
+            <a href="LabTechProfile.html">Profile</a>
+            <a href="main.html">Logout</a>
+        </div>
+
+        <link rel="stylesheet" href="template.css">
+    </head>
+
+    <body>
+        <h1>Reservation</h1>
+
+        <div class="btnCenter main">
+            <h1>Reservation</h1>
+            <button type="button" id="reserve" class="bigBtn" onClick="ReserveSlot()">Reserve Slot</button><br><br>
+            <button type="button" id="edit" class="bigBtn" onClick="EditSlot()">Edit Reservation</button><br><br>
+            <button type="button" id="delete" class="bigBtn" onClick="DeleteSlot()">Delete Reservation</button><br><br> 
+            <button type="button" id="view" class="bigBtn" onClick="ViewSlot()">View Slot Reservation</button><br><br>
+            <button type="button" id="back" class="bigBtn" onClick="history.back()">Back</button>
+        </div>
+
+        <script>
+            function ReserveSlot(){
+                window.location.assign("ReserveSlot.html");
+            }
+
+            function EditSlot(){
+                window.location.assign("EditSlot.html");
+            }
+
+            function DeleteSlot(){
+                window.location.assign("LabTechDeleteReservation.html");
+            }
+
+            function ViewSlot(){
+                window.location.assign("ViewSlot.html");
+            }
+        </script>
+    </body>
+</html>
