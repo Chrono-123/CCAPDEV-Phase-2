@@ -1,15 +1,16 @@
 <html>
-    <!--This html page is the profile page of students-->
+    <!--This html page is the profile page of lab technicians -->
     <title>Lab Tech Profile</title>
 
     <head>
         <script src = 'http://localhost:3000/js/script.js' defer></script>
-        <link rel="stylesheet" href="/css/template.css">
+        <link rel="stylesheet" href="../css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     </head>
 
-    {{> labTechNavBar login=true}}
+    {{> navBar login=true}}
     <body>
+
         <div class="profMain">
             <h1><b>Profile</b></h1>
             <div class="profDiv">
@@ -43,6 +44,7 @@
                         <div class="profOpts">
                             <br>
                             <button type="submit" id="updateProfile">Update Profile</button>
+                            <button type="submit" id="deleteProfile">Delete Profile</button>
                         </div>
                     </form>
                 </div>
