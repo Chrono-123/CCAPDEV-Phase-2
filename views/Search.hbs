@@ -1,0 +1,28 @@
+<html>
+    <!--This html page is for the lab technician and student to search for other users. Incomplete-->
+    <title>Search</title>
+
+    <head>
+        <script src = 'http://localhost:3000/js/script.js' defer></script>
+        <link rel="stylesheet" href="/css/template.css">
+    </head>
+
+    {{> navBar login=true}}
+    <body>
+        <fieldset>
+            <form action="/searchType" method="post">
+                <h1>Search Other Users</h1>
+                <input type="hidden" id="isSearchUser" name = "isSearchUser"/>
+
+                <div class="main btnCenter lbTemplate">
+                    Username <input type="text" id="userName" class="resizeSlightlySmaller" name = "userName">
+                    <button type="submit" class="search resizeSlightlySmaller smallBtn" onClick="SearchUser()" name="action" value="searchUser">Search</button><br>
+                    <br>Seat Number <input type="text" id="seatNum" class="resizeSlightlySmaller" name = "seatNum"><br>
+                    Lab Number <input type="text" id="labNum" class="resizeSlightlySmaller" name = "labNum">
+                    <button type="submit" class="search resizeSlightlySmaller smallBtn" onClick="SearchFreeSlots()" name="action" value="searchSlots">Search</button>
+                    <b><p type = 'error' id = 'reserveError'>{{error}}</p></b> 
+                </div>
+            </form>
+        </fieldset>
+    </body>
+</html>

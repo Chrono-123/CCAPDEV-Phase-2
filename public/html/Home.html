@@ -1,0 +1,51 @@
+<DOCTYPE! html>
+    <html>
+        <!--Home page of normal users have three lab buttons to view the available slots within 7 days from the current date-->
+        <title>View Slot Availability</title>
+        
+        <head>
+            <div id="stickyBar">
+                <h2>Laboratory Reservation</h2>
+                <a href="Home.html">Home</a>
+                <a href="Reservation.html">Reserve</a>
+                <a href="Search.html">Search</a>
+                <a href="Profile.html">Profile</a>
+                <a href="main.html">Logout</a>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <link rel="stylesheet" href="template.css">
+        </head>
+
+        <body>
+            <div class="lbTemplate">
+                <h3 style="text-align: center;">Which Lab do you want to check?</h3>
+                <button type="button" id="lab1" onClick="lb1()" class="Lab">Lab 1</button>
+                <button type="button" id="lab2" onClick="lb2()" class="Lab">Lab 2</button>
+                <button type="button" id="lab3" onClick="lb3()" class="Lab">Lab 3</button>
+            </div>
+            
+            <div id = Seatlist>
+                <p id = Seatdaylist><br></p>
+                <p id = Seathourlist></p>
+            </div>
+
+            <script>
+                function lb1(){
+                    console.log("Opened lab 1");
+                    $(location).attr("href", "./reservation/Lab1ReservationList.html");
+                }
+
+                function lb2(){
+                    console.log("Opened lab 2");
+                    $(location).attr("href", "./reservation/Lab2ReservationList.html");
+                }
+
+                function lb3(){
+                    console.log("Opened lab 3");
+                    $(location).attr("href", "./reservation/Lab3ReservationList.html");
+                }
+            </script>
+        </body>
+    </html>
+</DOCTYPE>
