@@ -1,0 +1,54 @@
+<html>
+    <!--This html page is the profile page of lab technicians -->
+    <title>Lab Tech Profile</title>
+
+    <head>
+        <script src = 'http://localhost:3000/js/script.js' defer></script>
+        <link rel="stylesheet" href="../css/template.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    </head>
+
+    {{> navBar login=true}}
+    <body>
+
+        <div class="profMain">
+            <h1><b>Profile</b></h1>
+            <div class="profDiv">
+                <div class="profImg">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" id="profilePic" onClick="ChangePic()"><br>
+                </div>
+                <div class="profInfo">
+                    <form id="profileForm" action="/updateAndDelete" method="post">
+                        <input type="hidden" id="firstName" name = "firstName" value="{{firstName}}"/>
+                        <input type="hidden" id="lastName" name = "lastName" value="{{lastName}}"/>
+                        <div id="profile">
+                            <br>Name: <input type="text" id="profileName" class="resizeSlightlySmaller" value="{{firstName}} {{lastName}}" name = "name">
+                        </div>
+
+                        <div id="bday">
+                            <br>Birthday:  <input type="date" id="profileBday" class="resizeSlightlySmaller" value="{{dateOfBirth}}" name = "dateOfBirth">
+                        </div>
+
+                        <div id="uName">
+                            <br> Username: <input type="text" id="profileUname" class="resizeSlightlySmaller" value="{{userName}}" name = "userName">
+                        </div>
+
+                        <div id="password">
+                            <br> Password: <input type="password" id="profilePassword" class="resizeSlightlySmaller" value="{{password}}" name = "password">
+                            <i class="fa-solid fa-eye" id="eye"></i>
+                        </div>
+                        
+                        <input type="hidden" id="deleteInfo" name = "delete"/>
+                        <input type="hidden" id="updateInfo" name = "update"/>
+
+                        <div class="profOpts">
+                            <br>
+                            <button type="submit" id="updateProfile">Update Profile</button>
+                            <button type="submit" id="deleteProfile">Delete Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
