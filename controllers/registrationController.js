@@ -57,12 +57,24 @@ async function techAccountExist(user){
 
 const registrationController = {
     registerUser: async function(req, res) {
-        if(await accountExist(req.body.user) >= 1) {
+        const firstName = req.body.fName;
+        const lastName= req.body.lName;
+        const idNumber= req.body.StudentId;
+        const dateOfBirth= req.body.birth;
+        const userName= req.body.user;
+        const password= req.body.password;
+
+        if(firstName == "" || lastName == "" || idNumber == "" || dateOfBirth == "" || userName == "" || password == "") {
+            const error = "You are missing one or more required item/s.";
+            res.render('Register', {error: error});
+        } else if(await accountExist(req.body.user) >= 1) {
             console.log("Student username already exists");
-            res.redirect('/register');
+            const error = "Student username already exists";
+            res.render('Register', {error: error});
         } else if(await techAccountExist(req.body.user) >= 1) {
             console.log("Labtech username already exists");
-            res.redirect('/register');
+            const error = "Labtech username already exists";
+            res.render('Register', {error: error});
         } else {
             try{
                 console.log(req.body.regType);
@@ -77,7 +89,7 @@ const registrationController = {
                         userType: "studentUser"
                     });
                     await newStudent.save();
-                    res.sendStatus(200);
+                    // res.sendStatus(200);
         
                 }else if (req.body.regType == 'labTech'){
                     const newLabTech = new userModel({
@@ -90,13 +102,14 @@ const registrationController = {
                         userType: "labTechUser"
                     });
                     await newLabTech.save();
-                    res.sendStatus(200);
+                    // res.sendStatus(200);
                 }
                 console.log("done");
-                // res.redirect(`/`);
+                res.redirect(`/`);
             }catch(err){
                 console.error(err);
-                res.sendStatus(500);
+                const error = "No reg type!";
+                res.render('Register', {error: error});
             }
         };
         console.log("reg user run");

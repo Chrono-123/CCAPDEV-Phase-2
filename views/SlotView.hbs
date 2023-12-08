@@ -4,7 +4,7 @@
         <title>Slot View</title>
 
         <head>
-            <script src = 'http://localhost:3000/js/script.js' defer></script>
+            <script src = '/js/script.js' defer></script>
             <link rel="stylesheet" href="/css/template.css">
         </head>
 
@@ -21,7 +21,8 @@
                 <th>Username</th>
                 <th>Reservation Number</th>
                 <th>Seat Number</th>
-                <th>Time Reserved</th>
+                <th>Initial Time Reserved</th>
+                <th>Final Time Reserved</th>
                 <th>Date Reserved</th>
                 <th>Lab Number</th>
             </tr>
@@ -33,6 +34,7 @@
                         <td><div class="reservationNumber"><strong>{{reservationNumber}}</strong></div></td>
                         <td><div class="seatNum"><strong>{{seatNum}}</strong></div></td>
                         <td><div class="timeReserved"><strong>{{timeReserved}}</strong></div></td>
+                        <td><input type="text" id="finalTimeReserved" class="resizeSlightlySmaller" value="{{finalTimeReserved}}" name = "finalTimeReserved"></td>
                         <td><div class="dateReserved"><strong>{{dateReserved}}</strong></div></td>
                         <td><div class="labNumber"><strong>{{labNumber}}</strong></div></td>
                         

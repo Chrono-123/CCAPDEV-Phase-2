@@ -363,6 +363,7 @@ const userController = {
     },
 
     updateAndDelete: async function(req, res) {
+        console.log("in update and delete");
         const action = req.body.action;
         const name = req.body.name;
         const idNumber = req.body.idNumber;
@@ -390,7 +391,7 @@ const userController = {
         });
         console.log(dateOfBirth);
         console.log(userName);
-        console.log(idNumber);
+        // console.log(idNumber);
         console.log(password);
         console.log(nameParts);
         console.log(firstName);

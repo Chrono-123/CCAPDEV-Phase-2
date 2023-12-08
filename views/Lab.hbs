@@ -1,7 +1,7 @@
 <!DOCTYPE html>
     <html>
         <head>
-            <script src = 'http://localhost:3000/js/script.js' defer></script>
+            <script src = '/js/script.js' defer></script>
             <link rel="stylesheet" href="/css/template.css">
         </head>
         <!--This html page is used by both the lab technician and student to view the reservation list of lab 1. Incomplete-->
@@ -18,7 +18,8 @@
             <tr>
                 <th>Name</th>
                 <th>Seat Number</th>
-                <th>Time Reserved</th>
+                <th>Initial Time Reserved</th>
+                <th>Final Time Reserved</th>
                 <th>Date Reserved</th>
             </tr>
                 {{#each reservations}}
@@ -28,6 +29,7 @@
                         <td><div class="name"><strong>{{name}}</strong></div></td>
                         <td><div class="seatNum"><strong>{{seatNum}}</strong></div></td>
                         <td><div class="timeReserve"><strong>{{timeReserved}}</strong></div></td>
+                        <td><div class="finalTimeReserved"><strong>{{finalTimeReserved}}</strong></div></td>
                         <td><div class="dateReserved"><strong>{{dateReserved}}</strong></div></td>
                         </div>
                     <tr>

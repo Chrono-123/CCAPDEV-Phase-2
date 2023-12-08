@@ -5,6 +5,7 @@ const userModel = require('../models/userSchema.js');
 const argon2 = require('argon2');
 const crypto = require('crypto');
 const cookieparser = require('cookie-parser');
+const session = require('express-session');
 
 const hashingConfig = {
     parallelism: 1,
@@ -24,12 +25,20 @@ async function hashPassword(password) {
 };
 
 async function verifyPassword(hash, password) { 
-    return await argon2.verify(hash, password, hashingConfig);
+    return await argon2.verify(hash, password, hashingConfig).catch(() => {
+        throw new Error('Something went wrong. Please try again.')
+    }).then(match => {
+        if (match) {
+            return true;
+        } else {
+            return false;
+        }
+    });
 };
 
-async function accountExist(user) {
+async function accountExist(username) {
     const exists = await userModel.find({
-        userName: user,
+        userName: username,
         userType: 'studentUser'
     },
     {
@@ -44,9 +53,9 @@ async function accountExist(user) {
     };
 };
 
-async function techAccountExist(user){
+async function techAccountExist(username){
     const exists = await userModel.find({
-        userName: user,
+        userName: username,
         userType: 'labTechUser'
     },
     {
@@ -70,6 +79,9 @@ const mainController = {
         });
 
         res.render(`main`);
+        
+        // if(session.userid) {
+        // }
     },
 
     login: function(req, res) {
@@ -81,131 +93,157 @@ const mainController = {
     },
 
     checkUser: async function(req, res) {
-        var userName = req.body.user;
+        const userName = req.body.user;
         const password = req.body.password;
         const rememberMe = req.body.rememberMeLogin;
         const kuuki = req.cookies;
         var hashPassword;
+        var firstName;
+        var lastName;
+        var idNumber;
+        var dateOfBirth;
+        // req.session.foo;
+        // console.log("req session", req.session.foo);
         console.log("in check user");
         console.log(password);
 
-        console.log("i am kuuki", kuuki);
-        if (kuuki) {
-            console.log("cookie: " + kuuki);
-            if((await accountExist(kuuki.username))) {
-                console.log("inside kuuki");
-                session = req.session;
-                session.userId = req.body.userName;
-                console.log(req.session);
-                await userModel.findOne({userName: userName}).then(user => {
-                    const tempUser = new userModel({
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        dateOfBirth: user.dateOfBirth,
-                        userName: user.userName,
-                        password: user.password,
-                        userType: "tempUser"
-                    });
-                }).catch(error => {
-                console.log("Insert op error: " + error);
-                });
+        // console.log("i am kuuki", kuuki);
+        // if (kuuki) {
+        //     console.log("cookie: " + kuuki);
+        //     if((await accountExist(kuuki.username))) {
+        //         console.log("inside kuuki");
+        //         session = req.session;
+        //         session.userId = req.body.userName;
+        //         console.log(req.session);
+        //         await userModel.findOne({userName: userName}).then(user => {
+        //             const tempUser = new userModel({
+        //                 firstName: user.firstName,
+        //                 lastName: user.lastName,
+        //                 dateOfBirth: user.dateOfBirth,
+        //                 userName: user.userName,
+        //                 password: user.password,
+        //                 userType: "tempUser"
+        //             });
+        //         }).catch(error => {
+        //         console.log("Insert op error: " + error);
+        //         });
 
-                res.cookie("foo", "bar", {
-                    username: tempUser.userName,
-                    maxAge: oneDay
-                })
-            }
+        //         res.cookie("foo", "bar", {
+        //             username: tempUser.userName,
+        //             maxAge: oneDay
+        //         })
+        //     }
+        // }
 
+        if(rememberMe) {
+            session = req.session;
+            session.userId = req.body.user;
         }
 
         if((await accountExist(userName))) {
             await userModel.findOne({userName: userName, userType: "studentUser"}).then(user => {
-                session = req.session;
-                session.userId = req.body.user;
                 console.log(req.session);
                 hashPassword = user.password;
+                firstName = user.firstName;
+                lastName = user.lastName;
+                idNumber = user.idNumber;
+                dateOfBirth = user.dateOfBirth;
                 console.log(hashPassword);
                 console.log("User found: ");
                 console.log("in student model find");
                 console.log(user);
                 console.log(user.password);
-                if (verifyPassword(hashPassword, req.body.password)) {
-                    console.log("in verify password");
-                    const tempUser = new userModel({
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        idNumber: user.idNumber,
-                        dateOfBirth: user.dateOfBirth,
-                        userName: user.userName,
-                        password: user.password,
-                        userType: "tempUser"
-                    });
-
-                    tempUser.save().then(val => {
-                        console.log("Insert successful: ");
-                        console.log(val);
-                    }).catch(error => {
-                        console.log("Insert op error: " + error);
-                    });
-                    res.statusMessage = "student";
-                    res.status(200);
-                }else{
-                    res.sendStatus(400);
-                }
-
-                res.send();
             }).catch(error => {
                 console.log("Insert op error: " + error);
+                res.render(`Login`, {error: error});
             });
+            
+            console.log("password is existing", await verifyPassword(hashPassword, req.body.password));
+            if (await verifyPassword(hashPassword, req.body.password)) {
+                console.log("in verify password");
+                // console.log(verifyPassword);
+                console.log("im first name", firstName);
+                const tempUser = new userModel({
+                    firstName: firstName,
+                    lastName: lastName,
+                    idNumber: idNumber,
+                    dateOfBirth: dateOfBirth,
+                    userName: userName,
+                    password: password,
+                    userType: "tempUser"
+                });
+
+                tempUser.save().then(val => {
+                    console.log("Insert successful: ");
+                    console.log(val);
+                }).catch(error => {
+                    console.log("Insert op error: " + error);
+                });
+                // res.statusMessage = "student";
+                // res.status(200);
+                res.redirect(`/home/` + userName);
+            }else{
+                // res.sendStatus(400);
+                const error = "Invalid password";
+                res.render(`Login`, {error: error});
+            }
         } else if((await techAccountExist(userName))) {
             console.log("in else if");
             await userModel.findOne({userName: userName, userType: "labTechUser"}).then(user => {
-                session = req.session;
-                session.userId = req.body.user;
                 console.log(req.session);
                 hashPassword = user.password;
+                firstName = user.firstName;
+                lastName = user.lastName;
+                idNumber = user.idNumber;
+                dateOfBirth = user.dateOfBirth;
                 console.log("User found: ");
                 console.log(user);
                 console.log(user.password);
-                if (verifyPassword(hashPassword, req.body.password)) {
-                    console.log("in verify password");
-                    const tempUser = new userModel({
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        idNumber: user.idNumber,
-                        dateOfBirth: user.dateOfBirth,
-                        userName: user.userName,
-                        password: user.password,
-                        userType: "tempUser"
-                    });
-
-                    tempUser.save().then(val => {
-                        console.log("Insert successful: ");
-                        console.log(val);
-                    }).catch(error => {
-                        console.log("Insert op error: " + error);
-                    });
-                    res.statusMessage = "labTech";
-                    res.status(200);
-                }else{
-                    console.log("no");
-                    res.sendStatus(400);
-                }
-                
-                res.send();
+                // res.send();
             }).catch(error => {
-                console.log("Insert op error: " + error);
+                res.render(`Login`, {error: error});
             });
+            if (await verifyPassword(hashPassword, req.body.password)) {
+                console.log("in verify password");
+                console.log(verifyPassword);
+                const tempUser = new userModel({
+                    firstName: firstName,
+                    lastName: lastName,
+                    idNumber: idNumber,
+                    dateOfBirth: dateOfBirth,
+                    userName: userName,
+                    password: password,
+                    userType: "tempUser"
+                });
+
+                tempUser.save().then(val => {
+                    console.log("Insert successful: ");
+                    console.log(val);
+                }).catch(error => {
+                    console.log("Insert op error: " + error);
+                });
+                // res.statusMessage = "student";
+                // res.status(200);
+                res.redirect(`/home/` + userName);
+            }else{
+                // res.sendStatus(400);
+                const error = "Invalid password";
+                res.render(`Login`, {error: error});
+            }
         } else {
-            res.sendStatus(400);
+            // res.sendStatus(400);
+            const error = "Invalid username";
+            res.render(`Login`, {error: error});
         }
-        if (rememberMe&&userType) {
-            console.log("inside cookie foo");
-            res.cookie("foo", "bar", {
-                username: tempUser.userName,
-                maxAge: oneDay
-            })
-        }
+        // if (rememberMe&&userType) {
+            
+        //     console.log("inside cookie foo");
+        //     req.session.foo = "bar";
+        //     res.cookie("foo", "bar", {
+        //         username: tempUser.userName,
+        //         maxAge: oneDay
+        //     })
+        // }
     },
     
     getStudent: function(req, res) {

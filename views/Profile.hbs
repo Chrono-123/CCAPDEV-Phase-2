@@ -3,14 +3,13 @@
     <title>Profile</title>
 
     <head>
-        <script src = 'http://localhost:3000/js/script.js' defer></script>
+        <script src = '/js/script.js' defer></script>
         <link rel="stylesheet" href="../css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     </head>
 
     {{> navBar login=true}}
     <body>
-
         <div class="profMain">
             <h1><b>Profile</b></h1>
             <div class="profDiv">
@@ -26,7 +25,7 @@
                         </div>
 
                         <div id="bday">
-                            <br>Birthday:  <input type="date" id="profileBday" class="resizeSlightlySmaller" value="{{dateOfBirth}}" name = "dateOfBirth">
+                            <br>Birthday:  <input type="text" id="profileBday" class="resizeSlightlySmaller" value="{{dateOfBirth}}" name = "dateOfBirth">
                         </div>
 
                         <div id="uName">
@@ -43,8 +42,8 @@
 
                         <div class="profOpts">
                             <br>
-                            <button type="submit" id="updateProfile">Update Profile</button>
-                            <button type="submit" id="deleteProfile">Delete Profile</button>
+                            <button type="submit" id="updateProfile" name="action" value="update">Update Profile</button>
+                            <button type="submit" id="deleteProfile" name="action" value="delete">Delete Profile</button>
                         </div>
                     </form>
                 </div>

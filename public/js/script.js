@@ -25,86 +25,105 @@ const regError = document.querySelector('#regError'); //error if user registers 
 const logForm = document.forms.loginForm; //Login Form
 const regForm = document.forms.regForm; //Registration Form
 // const reserveForm = document.forms.reserveForm; //Reservation Form
+// const userModel = require('../models/userSchema.js');
 
-login?.addEventListener("click", async function(e){ //confirms login
-    e.preventDefault();
-    const formData = new FormData(logForm);
-    const data = {};
-    for (let entry of formData.entries()) {
-        data[entry[0]] = entry[1];
-    };
-    console.log(data);
-    const json = JSON.stringify(data);
-    try{
-        const response = await fetch('/checkUser', {
-            method: 'POST',
-            body: json,
-            headers: {
+// window.onbeforeunload = function () {
+//     userModel.findOneAndRemove({userType: "tempUser"}).then(user => {
+//         console.log(user)
+//     }).catch(error => {
+//         console.log("Insert op error: " + error);
+//         res.render(`Login`, {error: error});
+//     });
+// }
+// login?.addEventListener("click", async function(e){ //confirms login
+//     e.preventDefault();
+//     const formData = new FormData(logForm);
+//     const data = {};
+//     for (let entry of formData.entries()) {
+//         data[entry[0]] = entry[1];
+//     };
+//     console.log(data);
+//     const json = JSON.stringify(data);
+//     try{
+//         const response = await fetch('/checkUser', {
+//             method: 'POST',
+//             body: json,
+//             headers: {
 
-                'Content-Type': 'application/json'
+//                 'Content-Type': 'application/json'
 
-            }
-        });
-        console.log(response);
-        console.log(response.statusText);
-        if(response.status === 200){
-            if(response.statusText == "student") {
-                console.log("i am the student");
-                location.href = 'http://localhost:3000/home';
-            } else if(response.statusText == "labTech") {
-                location.href = 'http://localhost:3000/labTechHome';
-            }
-            console.log("Logged in.");
-        } else if(response.status === 400){
-            loginError.innerText = 'Invalid Username or password';
-        }
-    }catch(err){
-        console.error(err);
-        console.log('No Accounts Existing');
-    }
-});
+//             }
+//         });
+//         console.log(response);
+//         console.log(response.statusText);
+//         // if(response.status === 200){
+//         //     if(response.statusText == "student") {
+//         //         console.log("i am the student");
+//         //         location.href = 'http://localhost:3000/home';
+//         //     } else if(response.statusText == "labTech") {
+//         //         location.href = 'http://localhost:3000/labTechHome';
+//         //     }
+//         //     console.log("Logged in.");
+//         // } else 
+//         if(response.status === 400){
+//             loginError.innerText = 'Invalid Username or password';
+//         }
+//     }catch(err){
+//         console.error(err);
+//         console.log('No Accounts Existing');
+//     }
+// });
 
-register?.addEventListener("click", async function(e){ //confirms registration
-    e.preventDefault();
-    const formData = new FormData(regForm);
-    const data = {};
-    for (let entry of formData.entries()) {
-        data[entry[0]] = entry[1];
-    };
-    console.log(data);
-    const json = JSON.stringify(data);
-    try{
-        const response = await fetch('/registerUser',{
-            method:'POST',
-            body: json,
-            headers: {
+// register?.addEventListener("click", async function(e){ //confirms registration
+//     e.preventDefault();
+//     const formData = new FormData(regForm);
+//     const data = {};
+//     for (let entry of formData.entries()) {
+//         data[entry[0]] = entry[1];
+//     };
+//     console.log(data);
+//     const json = JSON.stringify(data);
+//     try{
+//         const response = await fetch('/registerUser',{
+//             method:'POST',
+//             body: json,
+//             headers: {
 
-                'Content-Type': 'application/json'
+//                 'Content-Type': 'application/json'
 
-            }
-        });
-        console.log(response);
-        if (response.status == 200){
-            console.log("Account Added.");
-            location.href = 'http://localhost:3000/';
-        }else{
-            regError.innerText = 'You are missing one or more required item/s.';
-        }
-    }catch(err){
-        console.error(err);
-        console.log('Unable to make Account.');
-    }
-});
+//             }
+//         });
+//         // console.log(response);
+//         // if (response.status == 200){
+//         //     console.log("Account Added.");
+//         //     location.href = 'http://localhost:3000/';
+//         // }else{
+//         //     regError.innerText = 'You are missing one or more required item/s.';
+//         // }
+//     }catch(err){
+//         console.error(err);
+//         console.log('Unable to make Account.');
+//     }
+// });
+
+// Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+//     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+// });
 
 eye.addEventListener("click", function(){
-    this.classList.toggle("fa-eye-slash")
-    const type = pw.getAttribute("type") === "password" ? "text" : "password"
-    pw.setAttribute("type", type)
-});
-
-Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-});
+    console.log("help")
+    const i = document.querySelector('#eye');
+    const pw = document.querySelector('#profilePassword');
+    if (pw.getAttribute("type") == "password") {
+        pw.setAttribute("type", "text");
+        i.classList.add("fa-eye-slash");
+        i.classList.remove("fa-eye");
+    } else {
+        pw.setAttribute("type", "password");
+        i.classList.add("fa-eye");
+        i.classList.remove("fa-eye-slash");
+    }
+})
 
 // lab2?.addEventListener("click", async function(e){ 
 //     e.preventDefault();

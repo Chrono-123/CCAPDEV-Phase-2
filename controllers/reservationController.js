@@ -49,20 +49,32 @@ const reservationController = {
     
     reserve: async function(req, res) {
         const timeReserved = req.body.timeReserved;
+        const finalTimeReserved = req.body.finalTimeReserved;
         const dateReserved = req.body.dateReserved;
         const labNumber = req.body.action;
         const seatNumber = req.body.seatNum;
-        const reservationDate = req.body.reservationDate;
+        // const reservationDate = req.body.reservationDate;
         var tempUserName;
         var reservationId;
+        // var timeReserved = reservation.timeReserved;
+        console.log("i am reserved time", timeReserved);
+        var parseInitialTime = timeReserved.split(":");
+        var initialHours = parseInitialTime[0];
+        var initialMinutes = parseInitialTime[1];
+        var parseFinalTime = finalTimeReserved.split(":");
+        var finalHours = parseFinalTime[0];
+        var finalMinutes = parseFinalTime[1];
+
+        
 
         console.log("in reserve");
         // console.log(req);
         console.log(timeReserved);
+        console.log(finalTimeReserved);
         console.log(dateReserved);
         console.log(labNumber);
         console.log(seatNumber);
-        console.log(reservationDate);
+        // console.log(reservationDate);
 
         const reservationIdExists = await reservationIdModel.findOne({}).then(id => {
             console.log("awman", id);
@@ -99,175 +111,224 @@ const reservationController = {
         });
 
         if(await currentUserStudent(tempUserName)) {
-            const seatExists = await reservationModel.findOne({seatNum: seatNumber, labNumber: labNumber}).then(seat => {
-                console.log(seat);
-                if(seat == null)
-                    return false;
-                else {
-                    return true;
-                }
-            });
-            
-            const dateAndTimeExists = await reservationModel.findOne({timeReserved: timeReserved, dateReserved: dateReserved, labNumber: labNumber}).then(dateAndTime => {
-                if(dateAndTime == null)
-                    return false;
-                else {
-                    return true;
-                }
-            });
-            
-            console.log("in student");
-            console.log(seatExists);
-            if(seatExists) {
-                const error = "Seat already exists!";
-                res.render(`ReserveSlot`, {labTech: true, error: error});
-            } else if(dateAndTimeExists) {
-                const error = "Date or Time already exists!";
-                res.render(`ReserveSlot`, {labTech: true, error: error});
-            } else {
-                const reservation = new reservationModel({
-                    reservationNumber: reservationId,
-                    name: tempUserName,
-                    seatNum: req.body.seatNum,
-                    timeReserved: req.body.timeReserved,
-                    dateReserved: req.body.dateReserved,
-                    labNumber: labNumber,
+            if(seatNumber != "" && dateReserved != "") {
+                const seatExists = await reservationModel.findOne({seatNum: seatNumber, labNumber: labNumber}).then(seat => {
+                    console.log(seat);
+                    if(seat == null)
+                        return false;
+                    else {
+                        return true;
+                    }
                 });
-        
-                const seat = new seatModel({
-                    reservation: reservation,
-                    seatNum: req.body.seatNum,
-                    labNumber: labNumber
+                
+                const dateAndTimeExists = await reservationModel.findOne({timeReserved: timeReserved, dateReserved: dateReserved, labNumber: labNumber}).then(dateAndTime => {
+                    if(dateAndTime == null)
+                        return false;
+                    else {
+                        return true;
+                    }
                 });
-        
-                const lab = new labModel({
-                    seats: seat,
-                    labNumber: labNumber
+    
+                const finalDateAndTimeExists = await reservationModel.findOne({finalTimeReserved: finalTimeReserved, dateReserved: dateReserved, labNumber: labNumber}).then(dateAndTime => {
+                    if(dateAndTime == null)
+                        return false;
+                    else {
+                        return true;
+                    }
                 });
-        
-                const reservationSaved = 
-                    reservation.save().then(val => {
-                        console.log("Insert successful: ");
-                        console.log(val);
+                
+                console.log("in student");
+                console.log(seatExists);
+                if(finalHours - initialHours < 0) {
+                    const error = "Invalid time!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else if(((finalHours - initialHours == 0) && finalMinutes - initialMinutes <= 0)) {
+                    const error = "Invalid time!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else if(seatExists) {
+                    const error = "Seat already exists!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else if(dateAndTimeExists) {
+                    const error = "Date or Time already exists!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else if(finalDateAndTimeExists) {
+                    const error = "Date or Time already exists!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else {
+                    const reservation = new reservationModel({
+                        reservationNumber: reservationId,
+                        name: tempUserName,
+                        seatNum: req.body.seatNum,
+                        timeReserved: req.body.timeReserved,
+                        finalTimeReserved: req.body.finalTimeReserved,
+                        dateReserved: req.body.dateReserved,
+                        labNumber: labNumber,
+                    });
             
-                        seat.save().then(val => {
+                    const seat = new seatModel({
+                        reservation: reservation,
+                        seatNum: req.body.seatNum,
+                        labNumber: labNumber
+                    });
+            
+                    const lab = new labModel({
+                        seats: seat,
+                        labNumber: labNumber
+                    });
+            
+                    const reservationSaved = 
+                        reservation.save().then(val => {
                             console.log("Insert successful: ");
                             console.log(val);
-            
-                            lab.save().then(val => {
+                
+                            seat.save().then(val => {
                                 console.log("Insert successful: ");
                                 console.log(val);
-                                console.log(labNumber);
-                                return true;
+                
+                                lab.save().then(val => {
+                                    console.log("Insert successful: ");
+                                    console.log(val);
+                                    console.log(labNumber);
+                                    return true;
+                                }).catch(error => {
+                                    //lab error
+                                    console.log("Insert op error: " + error);
+                                    return false;
+                                });
                             }).catch(error => {
-                                //lab error
+                                //seat error
                                 console.log("Insert op error: " + error);
                                 return false;
                             });
                         }).catch(error => {
-                            //seat error
+                            //reservation error
                             console.log("Insert op error: " + error);
                             return false;
                         });
-                    }).catch(error => {
-                        //reservation error
-                        console.log("Insert op error: " + error);
-                        return false;
-                    });
-                
-                    console.log("im save", reservationSaved);
-                if(reservationSaved) {
-                    res.redirect(`/lab/` + labNumber);
-                } else if(!reservationSaved) {
-                    const error = "Reservation not saved!"
-                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                    
+                        console.log("im save", reservationSaved);
+                    if(reservationSaved) {
+                        res.redirect(`/lab/` + labNumber);
+                    } else if(!reservationSaved) {
+                        const error = "Reservation not saved!"
+                        res.render(`ReserveSlot`, {labTech: true, error: error});
+                    }
                 }
+            } else {
+                const error = "Invalid Field!"
+                res.render(`ReserveSlot`, {labTech: true, error: error});
             }
+            
             // res.redirect(`/lab/` + labNumber);
         } else if(await currentUserLabTech(tempUserName)) {
-            const seatExists = await reservationModel.findOne({seatNum: seatNumber, labNumber: labNumber}).then(seat => {
-                console.log(seat);
-                if(seat == null)
-                    return false;
-                else {
-                    return true;
-                }
-            });
+            const userName = req.body.userName;
+            if(seatNumber != "" && dateReserved != "" && userName != "") {
+                const seatExists = await reservationModel.findOne({seatNum: seatNumber, labNumber: labNumber}).then(seat => {
+                    console.log(seat);
+                    if(seat == null)
+                        return false;
+                    else {
+                        return true;
+                    }
+                });
 
-            const dateAndTimeExists = await reservationModel.findOne({timeReserved: timeReserved, dateReserved: dateReserved, labNumber: labNumber}).then(dateAndTime => {
-                if(dateAndTime == null)
-                    return false;
-                else {
-                    return true;
-                }
-            });
+                const dateAndTimeExists = await reservationModel.findOne({timeReserved: timeReserved, dateReserved: dateReserved, labNumber: labNumber}).then(dateAndTime => {
+                    if(dateAndTime == null)
+                        return false;
+                    else {
+                        return true;
+                    }
+                });
 
-            console.log(seatExists);
-            console.log("in labtech");
-            if(seatExists) {
-                const error = "Seat already exists!";
-                res.render(`ReserveSlot`, {labTech: true, error: error});
-            } else if(dateAndTimeExists) {
-                const error = "Date or Time already exists!";
-                res.render(`ReserveSlot`, {labTech: true, error: error});
-            } else {
-                const reservation = new reservationModel({
-                    reservationNumber: reservationId,
-                    name: req.body.userName,
-                    seatNum: req.body.seatNum,
-                    timeReserved: req.body.timeReserved,
-                    dateReserved: req.body.dateReserved,
-                    labNumber: labNumber
+                const finalDateAndTimeExists = await reservationModel.findOne({finalTimeReserved: finalTimeReserved, dateReserved: dateReserved, labNumber: labNumber}).then(dateAndTime => {
+                    console.log("in final date time");
+                    if(dateAndTime == null)
+                        return false;
+                    else {
+                        return true;
+                    }
                 });
-        
-                const seat = new seatModel({
-                    reservation: reservation,
-                    seatNum: req.body.seatNum,
-                    labNumber: labNumber
-                });
-        
-                const lab = new labModel({
-                    seats: seat,
-                    labNumber: labNumber
-                });
-        
-                const reservationSaved = 
-                    reservation.save().then(val => {
-                        console.log("Insert successful: ");
-                        console.log(val);
+
+                console.log(seatExists);
+                console.log("in labtech");
+                if(finalHours - initialHours < 0) {
+                    const error = "Invalid time!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else if(((finalHours - initialHours == 0) && finalMinutes - initialMinutes <= 0)) {
+                    const error = "Invalid time!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else if(seatExists) {
+                    const error = "Seat already exists!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else if(dateAndTimeExists) {
+                    const error = "Date or Time already exists!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else if(finalDateAndTimeExists) {
+                    const error = "Date or Time already exists!";
+                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                } else {
+                    const reservation = new reservationModel({
+                        reservationNumber: reservationId,
+                        name: req.body.userName,
+                        seatNum: req.body.seatNum,
+                        timeReserved: req.body.timeReserved,
+                        finalTimeReserved: req.body.finalTimeReserved,
+                        dateReserved: req.body.dateReserved,
+                        labNumber: labNumber
+                    });
             
-                        seat.save().then(val => {
+                    const seat = new seatModel({
+                        reservation: reservation,
+                        seatNum: req.body.seatNum,
+                        labNumber: labNumber
+                    });
+            
+                    const lab = new labModel({
+                        seats: seat,
+                        labNumber: labNumber
+                    });
+            
+                    const reservationSaved = 
+                        reservation.save().then(val => {
                             console.log("Insert successful: ");
                             console.log(val);
-            
-                            lab.save().then(val => {
+                
+                            seat.save().then(val => {
                                 console.log("Insert successful: ");
                                 console.log(val);
-                                console.log(labNumber);
-                                return true;
+                
+                                lab.save().then(val => {
+                                    console.log("Insert successful: ");
+                                    console.log(val);
+                                    console.log(labNumber);
+                                    return true;
+                                }).catch(error => {
+                                    //lab error
+                                    console.log("Insert op error: " + error);
+                                    return false;
+                                });
                             }).catch(error => {
-                                //lab error
+                                //seat error
                                 console.log("Insert op error: " + error);
                                 return false;
                             });
                         }).catch(error => {
-                            //seat error
+                            //reservation error
                             console.log("Insert op error: " + error);
                             return false;
                         });
-                    }).catch(error => {
-                        //reservation error
-                        console.log("Insert op error: " + error);
-                        return false;
-                    });
-                
-                    console.log("im save", reservationSaved);
-                if(reservationSaved) {
-                    res.redirect(`/lab/` + labNumber);
-                } else if(!reservationSaved) {
-                    const error = "Reservation not saved!"
-                    res.render(`ReserveSlot`, {labTech: true, error: error});
+                    
+                        console.log("im save", reservationSaved);
+                    if(reservationSaved) {
+                        res.redirect(`/lab/` + labNumber);
+                    } else if(!reservationSaved) {
+                        const error = "Reservation not saved!"
+                        res.render(`ReserveSlot`, {labTech: true, error: error});
+                    }
                 }
+            } else {
+                const error = "Invalid Field!"
+                res.render(`ReserveSlot`, {labTech: true, error: error});
             }
         }
     },
@@ -364,6 +425,7 @@ const reservationController = {
                     seatNum: seatNum,
                     dateReserved: dateReserved,
                     timeReserved: timeReserved,
+                    finalTimeReserved: req.body.finalTimeReserved,
                     labNumber: labNumber
                 })
             } catch (err) {
@@ -376,6 +438,7 @@ const reservationController = {
                     seatNum: seatNum,
                     dateReserved: dateReserved,
                     timeReserved: timeReserved,
+                    finalTimeReserved: req.body.finalTimeReserved,
                     labNumber: labNumber
                 })
             } catch (err) {

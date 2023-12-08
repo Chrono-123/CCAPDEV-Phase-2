@@ -19,6 +19,10 @@ const reservationSchema = new Schema({
         type: String,
         required: true,
     },
+    finalTimeReserved: {
+        type: String,
+        required: true,
+    },
     dateReserved: {
         type: String,
         required: true,

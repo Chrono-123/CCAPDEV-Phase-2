@@ -25,9 +25,8 @@ app.use(express.json());
 dotenv.config();
 
 const port = 3000;
-const uri = process.env.MONGODB_URI;
 
-mongoose.connect(uri);
+mongoose.connect('mongodb://localhost:27017/lab');
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
