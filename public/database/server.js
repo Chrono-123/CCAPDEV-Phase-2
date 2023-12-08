@@ -1,34 +1,17 @@
-// import 'dotenv/config';
+const mongoose = require('mongoose');
 
-// import { connectToMongo, getDb } from './conn.js';
+function connect(){
+    return mongoose.connect(process.env.MONGODB_URI);
+}
 
-// console.log(connectToMongo);
-// console.log(getDb);
+function signalHandler() {
+    console.log("Closing MongoDB connection...");
+    client.close();
+    process.exit();
+}
 
-// connectToMongo((error) => {
-    
-//     console.log("Connected to MongoDB server")
+process.on('SIGINT', signalHandler);
+process.on('SIGTERM', signalHandler);
+process.on('SIGQUIT', signalHandler);
 
-//     if (error) {
-//         console.log("error occured:");
-//         console.error(error);
-//         process.exit();
-//     }
-
-//     console.log("Connected to MongoDB server")
-
-//     const db = getDb();
-//     // const data = {fname, lname, birth, user, password} = req.body;
-//     // db.collection("test").insertOne({
-//     //     firstName: "Sean",
-//     //     lastName: "Lim",
-//     //     dateOfBirth: "11/10/01",
-//     //     userName: "Jesus",
-//     //     password: "Iamjesus"
-//     // }).then(val => {
-//     //     console.log("Insert successful: ");
-//     //     console.log(val);
-//     // }).catch(error => {
-//     //     console.log("Insert op error: " + error);
-//     // });
-// });
+module.exports = connect;
