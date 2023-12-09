@@ -475,4 +475,7 @@ const userController = {
     },
 }
 
+// exports.hashPassword = hashPassword;
 module.exports = userController;
+// module.exports = { hashPassword, currentUserStudent, currentUserLabTech, userSearchStudent, userSearchLabTech };
+// exports.userController = userController;

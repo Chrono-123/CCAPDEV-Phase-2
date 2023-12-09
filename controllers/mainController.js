@@ -265,4 +265,7 @@ const mainController = {
     }
 }
 
+// exports.mainController = mainController;
+// exports.verifyPassword = verifyPassword;
 module.exports = mainController;
+// module.exports = { verifyPassword, accountExist, techAccountExist };

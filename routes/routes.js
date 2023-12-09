@@ -1,8 +1,8 @@
 const express = require('express');
 const controller = require('../controllers/mainController.js');
-// const labController = require('../controllers/labController.js');
 const registrationController = require('../controllers/registrationController.js');
 const reservationController = require('../controllers/reservationController.js');
+const testController = require('../controllers/testController.js');
 const userController = require('../controllers/userController.js');
 const app = express();
 

@@ -44,10 +44,6 @@ const port = 3000;
 // app.use(bodyParser.urlencoded( {extended: false} ))
 // app.use(`/`, routes);
 
-
-
-
-
 app.use(cookieParser());
 
 app.set(`view engine`, `hbs`);
@@ -60,7 +56,7 @@ app.use(`/`, routes);
 
 // app.use(express.urlencoded({extended: false}));
 
-app.use('/', routes);
+// app.use('/', routes);
 
 
 app.listen(port, async function(){

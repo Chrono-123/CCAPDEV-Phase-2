@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-function connect(){
-    return mongoose.connect(process.env.MONGODB_URI);
+async function connect(){
+    return await mongoose.connect(process.env.MONGODB_URI);
 }
 
 function signalHandler() {
